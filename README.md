@@ -19,7 +19,7 @@ Usualmente la gestión de tareas a realizar en un proyecto se suele llevar a cab
 
 ## Descripción del proyecto
 
-Tras un estudio de las [arquitecturas] (http://jj.github.io/CC/documentos/temas/Arquitecturas_para_la_nube) posibles para el desarrollo del proyecto, se ha optado por una arquitectura basada en microservicios ya que se adapta perfectamente al concepto de "bot de Telegram" y a la filosofía de la asinatura Cloud Computing.
+Tras un estudio de las [arquitecturas](http://jj.github.io/CC/documentos/temas/Arquitecturas_para_la_nube) posibles para el desarrollo del proyecto, se ha optado por una arquitectura basada en microservicios ya que se adapta perfectamente al concepto de "bot de Telegram" y a la filosofía de la asinatura Cloud Computing.
 
 El bot será desarrolado en python y será desplegado en un servidor en la nube. Para este desarrollo existe una API para python con la que se puede programar toda la funcionalidad del bot. Por otro lado, para crear el bot será necesario usar el método que provee la propia aplicacion de Telegram al que llama [BotFather](https://core.telegram.org/bots#6-botfather).
 
