@@ -24,7 +24,16 @@ Tras un estudio de las [arquitecturas] (http://jj.github.io/CC/documentos/temas/
 
 El bot será desarrollado en python y será desplegado en un servidor en la nube. Para este desarrollo existe una API para python con la que se puede programar toda la funcionalidad del bot. Por otro lado, para crear el bot será necesario usar el método que provee la propia aplicacion de Telegram al que llama [BotFather](https://core.telegram.org/bots#6-botfather).
 
-En cuanto al almacenamiento de datos se usará una base de datos mySQL la cual será desplegada en la nube. En ella se almacenarán las distintas tablas necesarias para la gestión de issues y milestones.
+En cuanto al almacenamiento de datos se usará una base de datos [MongoDB](https://www.mongodb.com/es) la cual será desplegada en la nube. En ella se almacenarán las distintas tablas necesarias para la gestión de issues y milestones.
+
+La comunicación entre servicios será realizada por brokers, en especial [RabbitMQ](https://www.rabbitmq.com/).
+
+Por lo tanto el proyecto contará con dos microservicios:
+
+- Un "servicio almacenador" que será la base de datos en MongoDB.
+- Un "servicio gestor" que será el bot de Telegram y será el encargado de enviar y recibir datos a los usuarios y procesaro los comandos que estos le envían.
+
+La interfaz de este proyecto será la propia aplicación de Telegram la cual se usará para enviar comandos al bot.
 
 ## Descripción de los milestones del proyecto
 
