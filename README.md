@@ -31,7 +31,7 @@ La comunicación entre servicios será realizada por brokers, en especial [Rabbi
 Por lo tanto el proyecto contará con dos microservicios:
 
 - Un "servicio almacenador" que será la base de datos en MongoDB.
-- Un "servicio gestor" que será el bot de Telegram y será el encargado de enviar y recibir datos a los usuarios y procesaro los comandos que estos le envían.
+- Un "servicio gestor" que será el bot de Telegram y será el encargado de enviar y recibir datos a los usuarios y procesar los comandos que estos le envían. En general los comandos a realizar por este servicio serán almacenar issues o milestones en la base de datos o enviar los ya almacenados a los usuarios.
 
 La interfaz de este proyecto será la propia aplicación de Telegram la cual se usará para enviar comandos al bot.
 
