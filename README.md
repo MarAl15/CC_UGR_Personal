@@ -39,6 +39,10 @@ La interfaz de este proyecto será la propia aplicación de Telegram la cual se 
 
 Los milestones del proyecto coincidirán mayormente con los de la asignatura. [Enlace a los milestones](https://github.com/adritake/CC_UGR_Personal/milestones).
 
+## Paas seleccionado para el proyecto
+
+El Paas seleccionado para el proyecto es [Azure](https://azure.microsoft.com/es-es/). Más información sobre esta selección en el siguiente [documento](./docs/PaaS.md)
+
 
 [Página web del proyecto](https://adritake.github.io/CC_UGR_Personal/).
 
