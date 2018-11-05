@@ -1,5 +1,5 @@
-#FUNCIONAMIENTO
-#Funcionamiento del bot de Telegram
+# FUNCIONAMIENTO
+## Funcionamiento del bot de Telegram
 
 El bot de telegram consiste en un programa en python que hace uso de la [API de bots de Telegram](https://github.com/python-telegram-bot/python-telegram-bot).
 
