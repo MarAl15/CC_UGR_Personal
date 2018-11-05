@@ -1,0 +1,30 @@
+{
+  "name": "cc_ugr_personal",
+  "version": "1.0.0",
+  "description": "Bot de Telegrama para gestionar issues",
+  "main": "IssueBot.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adritake/CC_UGR_Personal.git"
+  },
+  "keywords": [
+    "bot",
+    "telegram"
+  ],
+  "author": "Adrian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adritake/CC_UGR_Personal/issues"
+  },
+  "homepage": "https://github.com/adritake/CC_UGR_Personal#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "node-telegram-bot-api": "^0.30.0"
+  }
+}
