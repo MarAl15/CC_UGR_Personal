@@ -1,1 +1,1 @@
-web: python IssueBot.py
+web: node IssueBot.js

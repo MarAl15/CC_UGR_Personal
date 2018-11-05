@@ -4,7 +4,12 @@
 - En primer lugar hay que tener un usuario en [Telegram](http://telegram.com.es/).
 - Crear un bot usando [BotFather](https://core.telegram.org/bots#6-botfather).
 - Buscar este bot en Telegram y escribirle `/newbot`. Una vez hecho esto te preguntará el nombre del bot, su nombre de usuario y te devolverá el token. Este token es importante puesto es requerido por la API de telegram para desarrollar nuestro propio bot.
-- El paso siguiente es crear un archivo en python con la funcionalidad del bot. Para ello hay que echarle un vistazo a la [documentación de la API](https://github.com/python-telegram-bot/python-telegram-bot).
+- El siguiente paso es clonar mi repositorio: `git clone https://github.com/adritake/CC_UGR_Personal.git`
+- Dentro del repositorio ejecutar `npm init`.
+- Crear un documento Procfile con la siguiente linea: `web: node IssueBot.js`
+- Crear el archivo *IssueBot.js* el cual contendrá la funcionalidad del bot. Para ello hay que echarle un vistazo a la [documentación de la API](https://github.com/yagop/node-telegram-bot-api)
+- Ejecutar `npm install --save node-telegram-bot-api` para instalar la api y guardar la dependecia en *package.json*.
+- Igual con `npmi install --save express`
 - Mi bot actual cuenta con una funcionalidad reducida y con una "base de datos" en el propio bot que solo sirve para esta versión y que en un futuro será actualizada por un servicio de base de datos. El código de mi bot es el siguiente:
 
 <details><summary>IssueBot 1.0</summary>
