@@ -1,4 +1,4 @@
-# Microsof Azure
+# Heroku
 
 Se ha seleccionado este PaaS por la gran cantidad de funciones que ofrece y por contar con una subscripción gratuita.
 
