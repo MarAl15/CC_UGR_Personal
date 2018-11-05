@@ -41,7 +41,15 @@ Los milestones del proyecto coincidirán mayormente con los de la asignatura. [E
 
 ## Paas seleccionado para el proyecto
 
-El Paas seleccionado para el proyecto es [Azure](https://azure.microsoft.com/es-es/). Más información sobre esta selección en el siguiente [documento](./docs/PaaS.md)
+El Paas seleccionado para el proyecto es [Heroku](https://www.heroku.com/). Más información sobre esta selección en el siguiente [documento](./docs/PaaS.md)
+
+## Despliegue de la aplicación
+
+Para crear y desplegar la aplicación se ha usado este [tutorial externo](https://hackernoon.com/host-a-python-telegram-bot-using-azure-in-30-minutes-58f246cedf23) en el que se explican los pasos iniciales. Los pasos que he seguido para realizar el servicio se encuentran en el siguiente [documento](./docs/Desarrollo.md)
+
+En este [documento](./docs/Despliegue.md) se explican los pasos a seguir para que puedas desplegar el bot.
+
+
 
 
 [Página web del proyecto](https://adritake.github.io/CC_UGR_Personal/).
