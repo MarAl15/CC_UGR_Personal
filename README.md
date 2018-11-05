@@ -49,6 +49,12 @@ Para crear y desplegar la aplicación se ha usado este [tutorial externo](https:
 
 En este [documento](./docs/Despliegue.md) se explican los pasos a seguir para que puedas desplegar el bot.
 
+El proyecto se ha desplegado en:
+
+despliegue https://dashboard.heroku.com/apps/gentle-meadow-58444
+
+
+
 
 
 
