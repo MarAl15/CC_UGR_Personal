@@ -85,3 +85,24 @@ if __name__ == '__main__':
 ```
 </p>
 </details>
+
+Para preparar la aplicación para heroku se han seguido los siguientes pasos:
+
+- Se ha creado una carpeta donde se almacenarán los archivos, yo la he llamado Despliegue.
+- Instalar virtualenv `pip install virtualenv`
+- Dentro de Despliegue ejecutar `virtualenv my_env`
+- Dentro de Despliegue clonar el repositorio (hasta ahora no tenía ningun archivo de configuración) `git clone git clone https://github.com/adritake/CC_UGR_Personal.git`
+- Copiar el código anteriormente indicado en un archivo llamado _IssueBot.py_ dentro del repositorio.
+- En *my_env* ejecutar `source bin/activate`, ahora debería aparecer (my_env) en la línea de órdenes.
+- Vamos al repositorio
+- Ejecutamos `pip install python-telegram-bot --upgrade` para instalar la API de Telegram.
+- Para guardar las dependencias ejecutamos `pip freeze > requirements.txt`.
+- Creamos un archivo llamado Procfile en el que se incluirá la siguiente línea: `web: python IssueBot.py`.
+- Creamos el archivo *__init.py*.
+- Ahora inicializamos el repositorio:
+	* git init
+	* git add .
+	* git commit -am "mensaje descriptivo"
+	* git push https://github.com/adritake/CC_UGR_Personal.git
+- Para desplegar la aplicación se siguen los pasos indicados en el documento [Despligue](./Despliegue.md). 
+
