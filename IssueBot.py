@@ -1,14 +1,3 @@
-# Desarrollo de la aplicación
-## Creación del bot
-
-- En primer lugar hay que tener un usuario en [Telegra](http://telegram.com.es/).
-- Crear un bot usando [BotFather](https://core.telegram.org/bots#6-botfather).
-- Buscar este bot en Telegram y escribirle `/newbot`. Una vez hecho esto te preguntará el nombre del bot, su nombre de usuario y te devolverá el token. Este token es importante puesto es requerido por la API de telegram para desarrollar nuestro propio bot.
-- El paso siguiente es crear un archivo en python con la funcionalidad del bot. Para ello hay que echarle un vistazo a la [documentación de la API](https://github.com/python-telegram-bot/python-telegram-bot).
-- Mi bot actual cuenta con una funcionalidad reducida y con una "base de datos" en el propio bot que solo sirve para esta versión y que en un futuro será actualizada por un servicio de base de datos. El código de mi bot es el siguiente:
-
-```python
-//IssueBot version 1.0
 #!/usr/bin/env python
 
 
@@ -79,4 +68,3 @@ def main():
 if __name__ == '__main__':
 	main()	
 
-```
