@@ -5,7 +5,6 @@ from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, RegexHandler,
                           ConversationHandler)
 
-from flask import Flask
 
 
 
@@ -16,12 +15,6 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
-
-app = Flask(__name__)
-
-@app.route('/')
-def isOK():
-	return json.dumps({ "status": "OK" })
 
 
 NIssues = 0
