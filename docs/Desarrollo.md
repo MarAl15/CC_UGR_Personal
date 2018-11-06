@@ -15,77 +15,98 @@
 <details><summary>IssueBot 1.0</summary>
 <p>
 
-```python
+```javascript
 //IssueBot version 1.0
-#!/usr/bin/env python
+
+//Inicialización de la parte de Webapp
+var express = require('express');
+var app = express();
+app.set('port', (process.env.PORT || 5000));
+app.use(express.static(__dirname + '/public'));
+
+app.get('/', function (req, res) {
+  res.send({"status": "OK"});
+});
+
+app.listen(app.get('port'), function () {
+  console.log('Example app listening on port ' + app.get('port'));
+});
 
 
-from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
-from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, RegexHandler,
-                          ConversationHandler)
+//Inicialización de la parte del bot
+const TelegramBot = require('node-telegram-bot-api');
 
-import logging
+ 
+//API Token Telegram
+const token = '768646003:AAEcUjONl0oSFCpP-b66YD0-sbOpd30qxsw';
 
-# Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
+//Creamos un bot que usa 'polling'para obtener actualizaciones
+const bot = new TelegramBot(token, {polling: true});
+const request = require('request');
+ 
 
-logger = logging.getLogger(__name__)
+// "Base de datos"
+var issues = [];
 
-NIssues = 0
-Issues = list()
-
-def start(bot,update):
-	update.message.reply_text("Hi! I'm IssueBot. Please use /help to see the commands")
-
-def help(bot,update):
-	update.message.reply_text("Commands:\n /add_issue <description of the issue> to add a new issue.\n /see_issues to see all the issues.\n /delete_issue (this feature will be added in the next version)")
-	
-def addIssue(bot,update,args):
-	global NIssues
-	if len(args) >= 1:
-		NIssues += 1
-		str_iss = "#" + str(NIssues)
-		for a in args:
-			str_iss = str_iss + " " + a
-		Issues.append(str_iss)
-		update.message.reply_text("Issue #" + str(NIssues) + " added.")
-	else:
-		update.message.reply_text("Use: /add_issue <description of the issue>")
+// Numero de issue
+var nIssue = 0;
 
 
-def seeIssues(bot,update):
-	for iss in Issues:
-		update.message.reply_text(iss)
+//Función start
+bot.onText(/\/start/, (msg) => {
 
-def getUpdates():
-	return "hola"
-
-def main():
-	"""Run bot."""
-	updater = Updater("768646003:AAEcUjONl0oSFCpP-b66YD0-sbOpd30qxsw")
-
-	# Get the dispatcher to register handlers
-	dp = updater.dispatcher
-
-	# on different commands - answer in Telegram
-	dp.add_handler(CommandHandler("start", start))
-	dp.add_handler(CommandHandler("help", help))
-	dp.add_handler(CommandHandler("add_issue", addIssue, pass_args=True))
-	dp.add_handler(CommandHandler("see_issues", seeIssues))
+	//Id del mensaje
+	const chatId = msg.chat.id;
   
+	//Mensaje de bienvenida
+	bot.sendMessage(chatId, "Hi! I'm IssueBot. If you need help type: /help" );
 
-	# Start the Bot
-	updater.start_polling()
+	
+});
 
-	# Block until you press Ctrl-C or the process receives SIGINT, SIGTERM or
-	# SIGABRT. This should be used most of the time, since start_polling() is
-	# non-blocking and will stop the bot gracefully.
-	updater.idle()
+//Funcion help
+bot.onText(/\/help/, (msg) => {
+
+	//Id del mensaje
+	const chatId = msg.chat.id;
+  
+	//Mensaje de bienvenida
+	bot.sendMessage(chatId, "Commands: \n /add_issue <description of the issue> to add a new issue \n/see_issues to see all the issues \n/delete_issue (this feature will be added in the next version" );
+
+	
+});
 
 
-if __name__ == '__main__':
-	main()	
+//Funcion para guardar issues
+bot.onText(/\/add_issue (.+)/, (msg, match) => {
+
+	//Id del mensaje
+	const chatId = msg.chat.id;
+  
+	if(match[1] != ""){
+		//Incrementamos el numero de issue
+		nIssue += 1;
+		//Issue a guardar
+		const resp = "#" + nIssue + " " + match[1]; 
+		//Almacenamos el issue
+		issues = issues.concat(resp);
+		//Enviar confirmación
+		bot.sendMessage(chatId, "Issue #" + nIssue + " added." );
+	}
+	
+});
+
+//Funcion para ver los issues
+bot.onText(/\/see_issues/, (msg) => {
+
+	//Id del mensaje
+	const chatId = msg.chat.id;
+  
+	for(i=0; i<issues.length; i++)
+		bot.sendMessage(chatId, issues[i]);
+	
+	
+});
 
 ```
 </p>
