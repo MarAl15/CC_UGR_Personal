@@ -4,6 +4,8 @@
 var express = require('express');
 var app = express();
 
+
+
 var port = process.env.PORT || 5000;
 app.set('port', port);
 app.use(express.static(__dirname + '/public'));
@@ -23,14 +25,7 @@ var server = app.listen(app.get('port'), function () {
   console.log('App listening on port ' + app.get('port'));
 });
 
-
-function stop() {
-  server.close();
-}
-
-module.exports = server;
-module.exports.stop = stop;
-
+module.exports = server
 
 
 //Inicialización de la parte del bot
@@ -107,5 +102,6 @@ bot.onText(/\/see_issues/, (msg) => {
 	
 	
 });
+
 
 

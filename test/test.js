@@ -1,29 +1,17 @@
-const request = require('supertest');
-const app = require('../IssueBot');
+var request = require('supertest');
+var app = require('../IssueBot');
 
 
 //==================== Server tests ====================
 
-describe('Server status', function(done) {
+describe('Server status', function() {
 	
 	it('responds {"status":"OK"} to /', function (done){
 		request(app)
 		.get('/')
 		.expect('Content-Type',/json/)
-		.expect(200);
-		
-		done();
-		
-		
+		.expect(200,done);
 
-	});
-	
-	after(function (done) {
-		
-		app.stop();
-		done();
-		
-		
 	});
 
 
