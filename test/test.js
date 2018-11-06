@@ -1,6 +1,9 @@
 const request = require('supertest');
 const app = require('../IssueBot');
 
+
+//==================== Server tests ====================
+
 describe('Server status', function() {
 	
 	it('responds {"status":"OK"} to /', function (done){
