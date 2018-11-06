@@ -11,5 +11,6 @@
 - Ahora es el momento de subir el bot a Heroku, vamos a la carpeta del repositorio y ejecutamos: `heroku login`.
 - Crear el repositorio para heroku: `heroku create`.
 - Subirlo a Heroku con `git push heroku master`.
+- Si ejecutas `heroku open` debería de abrirse el explorador y mostrar un mensaje JSON `{"status":"OK"}`
 
 Con esto el bot debería de estar funcionando en heroku. Si surge algún problema ejecutar `heroku logs --tail` para ver los posibles errores.
