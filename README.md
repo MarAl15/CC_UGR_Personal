@@ -55,7 +55,7 @@ despliegue https://shrouded-peak-63776.herokuapp.com/
 
 ## Funcionamiento de la aplicación.
 
-El funcionamiento de la aplicación se explica en este [documento](./docs/Funcionamiento.md)
+El funcionamiento de la aplicación se explica en este [documento](./docs/Funcionamiento.md).
 
 
 
