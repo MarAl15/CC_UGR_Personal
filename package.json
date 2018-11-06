@@ -4,10 +4,11 @@
   "description": "Bot de Telegrama para gestionar issues",
   "main": "IssueBot.js",
   "directories": {
-    "doc": "docs"
+    "doc": "docs",
+    "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,10 @@
   "homepage": "https://github.com/adritake/CC_UGR_Personal#readme",
   "dependencies": {
     "express": "^4.16.4",
+    "mocha-test-url": "^0.1.17",
     "node-telegram-bot-api": "^0.30.0"
+  },
+  "devDependencies": {
+    "supertest": "^3.3.0"
   }
 }
