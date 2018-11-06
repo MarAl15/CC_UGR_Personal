@@ -3,17 +3,34 @@
 //Inicialización de la parte de Webapp
 var express = require('express');
 var app = express();
-module.exports = app
-app.set('port', (process.env.PORT || 5000));
+
+var port = process.env.PORT || 5000;
+app.set('port', port);
 app.use(express.static(__dirname + '/public'));
+
+
+
 
 app.get('/', function (req, res) {
   res.send({"status": "OK"});
+
 });
 
-app.listen(app.get('port'), function () {
-  console.log('Example app listening on port ' + app.get('port'));
+
+
+
+var server = app.listen(app.get('port'), function () {
+  console.log('App listening on port ' + app.get('port'));
 });
+
+
+function stop() {
+  server.close();
+}
+
+module.exports = server;
+module.exports.stop = stop;
+
 
 
 //Inicialización de la parte del bot
