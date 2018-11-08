@@ -3,6 +3,7 @@ var app = require('../IssueBot');
 var IssueManager = require('../IssueManager');
 const assert = require('assert');
 
+
 //==================== Server tests ====================
 
 describe('Server test', function() {
