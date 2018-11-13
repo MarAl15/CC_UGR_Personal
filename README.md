@@ -59,6 +59,5 @@ El funcionamiento de la aplicación se explica en este [documento](./docs/Funcio
 
 
 
-
 [Página web del proyecto](https://adritake.github.io/CC_UGR_Personal/).
 
