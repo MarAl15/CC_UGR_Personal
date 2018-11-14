@@ -27,7 +27,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "mocha-test-url": "^0.1.17",
-    "node-telegram-bot-api": "^0.30.0"
+    "telebot": "^1.2.6"
   },
   "devDependencies": {
     "supertest": "^3.3.0"

@@ -54,71 +54,48 @@ var server = app.listen(app.get('port'), function () {
 module.exports = server
 
 
-//Bot initialization
-const TelegramBot = require('node-telegram-bot-api');
-
+//============== Bot part ==============
  
 //API Token Telegram
 const token = '768646003:AAEcUjONl0oSFCpP-b66YD0-sbOpd30qxsw';
 
+//Create a bot 
+const TeleBot = require('telebot')
+const bot = new TeleBot(token);
+//const request = require('request');
 
-//Create a bot that uses polling to get updates
-const bot = new TelegramBot(token, {polling: true});
-const request = require('request');
- 
 
 //start function
-bot.onText(/\/start/, (msg) => {
-
-	//message id
-	const chatId = msg.chat.id;
-  
-	//welcome message
-	bot.sendMessage(chatId, "Hi! I'm IssueBot. If you need help type: /help" );
-
-	
-});
+bot.on('/start', (msg) => msg.reply.text("Hi! I'm IssueBot. If you need help type: /help"));
 
 //help function
-bot.onText(/\/help/, (msg) => {
-
-	//message id
-	const chatId = msg.chat.id;
-  
-	//help message
-	bot.sendMessage(chatId, "Commands: \n /add_issue <description of the issue> to add a new issue \n/see_issues to see all the issues \n/delete_issue (this feature will be added in the next version" );
-
-	
-});
+bot.on('/help', (msg) => msg.reply.text("Commands: \n /add_issue <description of the issue> to add a new issue \n/see_issues to see all the issues \n/delete_issue (this feature will be added in the next version"));
 
 
 //Function to save issues
-bot.onText(/\/add_issue (.+)/, (msg, match) => {
+bot.on(/^\/add_issue (.+)$/, (msg, props) => {
 
-	//message id
-	const chatId = msg.chat.id;
-  
-	if(match[1] != ""){
-		iss.addIssue(match[1]);
+	if(props.match[1] != ""){
+		iss.addIssue(props.match[1]);
 		//Send confirmation
-		bot.sendMessage(chatId, "Issue added." );
+		return bot.sendMessage(msg.from.id, "Issue added.", { replyToMessage: msg.message_is } );
 	}
 	
 });
 
 //Function to see the issues
-bot.onText(/\/see_issues/, (msg) => {
+bot.on('/see_issues', (msg) => {
 
-	//message id
-	const chatId = msg.chat.id;
   
 	//Get the issues
 	var issues = iss.getIssues();
 	for(i=0; i<issues.length; i++)
-		bot.sendMessage(chatId, issues[i]);
+		bot.sendMessage(msg.from.id, issues[i], { replyToMessage: msg.message_is } );
 	
 	
 });
+
+bot.start();
 
 
 
