@@ -7,8 +7,8 @@
 - El siguiente paso es clonar mi repositorio: `git clone https://github.com/adritake/CC_UGR_Personal.git`
 - Dentro del repositorio ejecutar `npm init`.
 - Crear un documento Procfile con la siguiente linea: `web: node IssueBot.js`
-- Crear el archivo *IssueBot.js* el cual contendrá la funcionalidad del bot. Para ello hay que echarle un vistazo a la [documentación de la API](https://github.com/yagop/node-telegram-bot-api)
-- Ejecutar `npm install --save node-telegram-bot-api` para instalar la api y guardar la dependecia en *package.json*.
+- Crear el archivo *IssueBot.js* el cual contendrá la funcionalidad del bot. Para ello hay que echarle un vistazo a la [documentación de la API](https:/https://github.com/mullwar/telebot)
+- Ejecutar `npm install --save telebot` para instalar la api y guardar la dependecia en *package.json*.
 - Igual con `npmi install --save express`
 - Mi bot actual cuenta con una funcionalidad reducida y con una "base de datos" en el propio bot que solo sirve para esta versión y que en un futuro será actualizada por un servicio de base de datos. El código de mi bot es el siguiente:
 
@@ -18,95 +18,105 @@
 ```javascript
 //IssueBot version 1.0
 
-//Inicialización de la parte de Webapp
+//Webapp initialization
 var express = require('express');
 var app = express();
-app.set('port', (process.env.PORT || 5000));
+
+//Import the IssueManager
+const IssueManager = require('./IssueManager');
+var iss = new IssueManager();
+
+
+//Seting the ports to the app
+var port = process.env.PORT || 5000;
+app.set('port', port);
 app.use(express.static(__dirname + '/public'));
 
+
+
+//Adding functions to the app
 app.get('/', function (req, res) {
-  res.send({"status": "OK"});
+
+	var n = iss.getNIssues();
+	var msg = {
+   			"status": "OK",
+   			"ejemplo": {
+				    "ruta": "/see_issues",
+                		    "valor": { "size" : n }
+				   }
+		   }
+	res.send(msg);
 });
 
-app.listen(app.get('port'), function () {
-  console.log('Example app listening on port ' + app.get('port'));
+
+app.get('/see_issues', function (req, res) {
+  
+	var issues = iss.getIssues();
+	var resjson = { "size" : issues.length };
+	if( issues.length > 0 )
+		for( i = 0; i < issues.length; i++ )
+			resjson["Issue #" + (i+1)] = issues[i];
+
+
+	res.send(resjson);
+
 });
 
 
-//Inicialización de la parte del bot
-const TelegramBot = require('node-telegram-bot-api');
 
+
+
+//Start the app
+var server = app.listen(app.get('port'), function () {
+  console.log('App listening on port ' + app.get('port'));
+});
+
+module.exports = server
+
+
+//============== Bot part ==============
  
 //API Token Telegram
 const token = '768646003:AAEcUjONl0oSFCpP-b66YD0-sbOpd30qxsw';
 
-//Creamos un bot que usa 'polling'para obtener actualizaciones
-const bot = new TelegramBot(token, {polling: true});
-const request = require('request');
- 
-
-// "Base de datos"
-var issues = [];
-
-// Numero de issue
-var nIssue = 0;
+//Create a bot 
+const TeleBot = require('telebot')
+const bot = new TeleBot(token);
+//const request = require('request');
 
 
-//Función start
-bot.onText(/\/start/, (msg) => {
+//start function
+bot.on('/start', (msg) => msg.reply.text("Hi! I'm IssueBot. If you need help type: /help"));
 
-	//Id del mensaje
-	const chatId = msg.chat.id;
-  
-	//Mensaje de bienvenida
-	bot.sendMessage(chatId, "Hi! I'm IssueBot. If you need help type: /help" );
-
-	
-});
-
-//Funcion help
-bot.onText(/\/help/, (msg) => {
-
-	//Id del mensaje
-	const chatId = msg.chat.id;
-  
-	//Mensaje de bienvenida
-	bot.sendMessage(chatId, "Commands: \n /add_issue <description of the issue> to add a new issue \n/see_issues to see all the issues \n/delete_issue (this feature will be added in the next version" );
-
-	
-});
+//help function
+bot.on('/help', (msg) => msg.reply.text("Commands: \n /add_issue <description of the issue> to add a new issue \n/see_issues to see all the issues \n/delete_issue (this feature will be added in the next version"));
 
 
-//Funcion para guardar issues
-bot.onText(/\/add_issue (.+)/, (msg, match) => {
+//Function to save issues
+bot.on(/^\/add_issue (.+)$/, (msg, props) => {
 
-	//Id del mensaje
-	const chatId = msg.chat.id;
-  
-	if(match[1] != ""){
-		//Incrementamos el numero de issue
-		nIssue += 1;
-		//Issue a guardar
-		const resp = "#" + nIssue + " " + match[1]; 
-		//Almacenamos el issue
-		issues = issues.concat(resp);
-		//Enviar confirmación
-		bot.sendMessage(chatId, "Issue #" + nIssue + " added." );
+	if(props.match[1] != ""){
+		iss.addIssue(props.match[1]);
+		//Send confirmation
+		return bot.sendMessage(msg.from.id, "Issue added.", { replyToMessage: msg.message_is } );
 	}
 	
 });
 
-//Funcion para ver los issues
-bot.onText(/\/see_issues/, (msg) => {
+//Function to see the issues
+bot.on('/see_issues', (msg) => {
 
-	//Id del mensaje
-	const chatId = msg.chat.id;
   
+	//Get the issues
+	var issues = iss.getIssues();
 	for(i=0; i<issues.length; i++)
-		bot.sendMessage(chatId, issues[i]);
+		bot.sendMessage(msg.from.id, issues[i], { replyToMessage: msg.message_is } );
 	
 	
 });
+
+bot.start();
+
 
 ```
 </p>
