@@ -45,7 +45,7 @@ El Paas seleccionado para el proyecto es [Heroku](https://www.heroku.com/). Más
 
 ## Despliegue de la aplicación
 
-Para crear y desplegar la aplicación se ha usado este [tutorial externo](https://hackernoon.com/host-a-python-telegram-bot-using-azure-in-30-minutes-58f246cedf23) en el que se explican los pasos iniciales. Los pasos que he seguido para realizar el servicio se encuentran en el siguiente [documento](./docs/Desarrollo.md)
+Los pasos que he seguido para realizar el servicio se encuentran en el siguiente [documento](./docs/Desarrollo.md)
 
 En este [documento](./docs/Despliegue.md) se explican los pasos a seguir para que puedas desplegar el bot.
 
