@@ -7,7 +7,7 @@ const assert = require('assert');
 //==================== Server tests ====================
 
 describe('Server test', function() {
-	
+
 	it('responds {"status":"OK"} to /', function (done){
 		request(app)
 		.get('/')
@@ -18,7 +18,7 @@ describe('Server test', function() {
 			assert.equal(result.body.status, "OK");
 		});
 		done();
-		
+
 	});
 
 	it('responds with the issues to /see_issues', function(done){
@@ -43,30 +43,37 @@ describe('Server test', function() {
 describe('IssueManager test', function() {
 
 	var iss = new IssueManager();
+	var chat_id = 1111;
 
 	it( 'get 0 issues when there is no issues' , function(done){
-		assert.equal(iss.getIssues().length, 0);
+		assert.equal(iss.getIssues(chat_id).length, 0);
 		done();
 	});
 
 	it( 'add issue properly', function(done){
-		
-		iss.addIssue("test");
-		var result = iss.getIssues();
+
+		iss.addIssue(chat_id,"test");
+		var result = iss.getIssues(chat_id);
 		assert.equal(result.length,1);
-		assert.equal(result[0],"#1 test");
+		assert.equal(result[0],"test");
 		done();
 
 	});
 
 	it( 'get the number of issues', function(done){
-		assert(iss.getNIssues(),1);
-		done();	
+		assert.equal(iss.getNIssues(chat_id), 1);
+		done();
 	});
 
 	it( 'get the last issue', function(done){
-		var result = iss.getLastIssue();
-		assert(result, "#1 test");
+		var result = iss.getLastIssue(chat_id);
+		assert.equal(result, "test");
+		done();
+	});
+
+	it( 'delete the issue', function(done){
+		iss.deleteIssue(chat_id, 0);
+		assert.equal(iss.getNIssues(chat_id), 0);
 		done();
 	});
 
