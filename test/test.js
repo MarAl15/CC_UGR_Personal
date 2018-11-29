@@ -23,7 +23,7 @@ describe('Server test', function() {
 
 	it('responds with the issues to /see_issues', function(done){
 		request(app)
-		.get('/see_issues')
+		.get('/see_issues/randomid')
 		.set('Accept', 'application/json')
 		.expect('Content-Type',/json/)
 		.expect(200)

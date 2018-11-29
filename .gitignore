@@ -73,10 +73,14 @@ typings/
 .serverless
 
 # FuseBox cache
+.fusebox/
 
 # log files
 .log
-.fusebox/
+
+# Playbook .retry
+.retry
+
 
 # node_modules
 node_modules/
