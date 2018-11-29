@@ -73,6 +73,9 @@ typings/
 .serverless
 
 # FuseBox cache
+
+# log files
+.log
 .fusebox/
 
 # node_modules

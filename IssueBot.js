@@ -1,3 +1,32 @@
+//Creating the log system
+const { createLogger, format, transports } = require('winston');
+const { combine, timestamp, label, prettyPrint } = format;
+const logger = createLogger({
+  level: 'info',
+	format: combine(
+    timestamp(),
+    prettyPrint()
+  ),
+  transports: [
+    //
+    // - Write to all logs with level `info` and below to `combined.log`
+    // - Write all logs error (and below) to `error.log`.
+    //
+    new transports.File({ filename: 'error.log', level: 'error' }),
+    new transports.File({ filename: 'combined.log' })
+  ]
+});
+// If we're not in production then log to the `console` with the format:
+// `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
+//
+if (process.env.NODE_ENV !== 'production') {
+  logger.add(new transports.Console({
+    format: format.simple()
+  }));
+}
+
+
+
 //Webapp initialization
 var express = require('express');
 var app = express();
@@ -29,13 +58,16 @@ app.get('/', function (req, res) {
 });
 
 
-app.get('/see_issues', function (req, res) {
+app.get('/see_issues/:id', function (req, res) {
 
-	var issues = iss.getIssues();
+	var issues = iss.getIssues(req.params.id);
 	var resjson = { "size" : issues.length };
 	if( issues.length > 0 )
 		for( i = 0; i < issues.length; i++ )
 			resjson["Issue #" + (i+1)] = issues[i];
+	else {
+		logger.info("No issues for the requeste")
+	}
 
 
 	res.send(resjson);
@@ -49,6 +81,7 @@ app.get('/see_issues', function (req, res) {
 //Start the app
 var server = app.listen(app.get('port'), function () {
   console.log('App listening on port ' + app.get('port'));
+	logger.info('App listening on port ' + app.get('port'));
 });
 
 module.exports = server
@@ -80,6 +113,9 @@ bot.on(/^\/add (.+)$/, (msg, props) => {
 		//Send confirmation
 		return bot.sendMessage(msg.chat.id, "Issue added.", { replyToMessage: msg.message_is } );
 	}
+	else {
+		logger.warn("No issue added for the chat id " + msg.chat.id);
+	}
 
 });
 
@@ -89,6 +125,9 @@ bot.on('/see', (msg) => {
 
 	//Get the issues
 	var issues = iss.getIssues(msg.chat.id);
+	if(issues.length == 0)
+		logger.info("No issues for the chat id " + msg.chat.id);
+
 	for(i=0; i<issues.length; i++)
 		bot.sendMessage(msg.chat.id, '#' + i + ' ' + issues[i], { replyToMessage: msg.message_is } );
 
@@ -105,9 +144,10 @@ bot.on(/^\/delete (.+)$/, (msg, props) =>{
 		iss.deleteIssue(msg.chat.id, iss_id);
 		bot.sendMessage(msg.chat.id, "Issue #" + iss_id + " deleted.", { replyToMessage: msg.message_is } );
 	}
-	else
+	else{
 		bot.sendMessage(msg.chat.id, "Use: /delete <issue_id>", { replyToMessage: msg.message_is } );
-
+		logger.warn("No issue was deleted for chat id " + msg.chat.id);
+	}
 });
 
 
