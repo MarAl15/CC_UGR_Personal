@@ -1,6 +1,5 @@
 
 //Class IssueManager
-
 function IssueManager(){
 	this.issues = new Map();
 }
