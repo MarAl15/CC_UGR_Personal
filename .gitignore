@@ -78,8 +78,9 @@ typings/
 # log files
 .log
 
-# Playbook .retry
+# Playbook retry
 .retry
+
 
 
 # node_modules
