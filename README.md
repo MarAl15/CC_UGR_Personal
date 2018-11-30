@@ -1,5 +1,4 @@
 # PROYECTO PARA CLOUD COMPUTING
-
 ## Descripción del problema y solución propuesta
 
 En el desarrollo de muchos proyectos de software la comunicación entre miembros del equipo se suele hacer mediante aplicaciones de dispositivos móviles. Las más usadas son WhatsApp y Telegram.
