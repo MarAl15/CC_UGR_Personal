@@ -1,5 +1,5 @@
 # Desarrollo de la aplicación
-## Creación del bot
+## Creación del servicio
 
 - Se ha creado un clase IssueManager la cual es la encargada de gestionar los issues de los usuarios. Su código se encuentra en este [archivo](../IssueManager.js).
 
