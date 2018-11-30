@@ -14,3 +14,7 @@
 - Si ejecutas `heroku open` debería de abrirse el explorador y mostrar un mensaje JSON `{"status":"OK"}`
 
 Con esto el servicio debería de estar funcionando en heroku. Si surge algún problema ejecutar `heroku logs --tail` para ver los posibles errores.
+
+## Despliegue automático
+Heroku permite desplegar la aplicación al hacer push al repositorio de github para ello hay que activarlo como aparece en la siguiente imagen:
+![heroku](img/heroku.png)
