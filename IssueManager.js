@@ -5,7 +5,7 @@ function IssueManager(){
 }
 
 IssueManager.prototype.addIssue = function(id, issue ){
-	//If the chat_id is new
+	//If the id is new
 	if( this.issues.has(id))
 		this.issues.get(id).push(issue);
 	else
