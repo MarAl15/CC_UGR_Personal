@@ -1,1 +1,1 @@
-web: node IssueBot.js
+web: node IssueService.js
