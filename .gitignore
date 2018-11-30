@@ -81,6 +81,9 @@ typings/
 # Playbook retry
 .retry
 
+# package-lock.json
+package-lock.json
+
 
 
 # node_modules

@@ -29,6 +29,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 //Webapp initialization
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 
 //Import the IssueManager
@@ -40,6 +41,10 @@ var iss = new IssueManager();
 var port = process.env.PORT || 5000;
 app.set('port', port);
 app.use(express.static(__dirname + '/public'));
+app.use(express.urlencoded());
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+
 
 
 
@@ -54,26 +59,63 @@ app.get('/', function (req, res) {
                 		    "valor": { "size" : n }
 				   }
 		   }
+  res.status(200);
 	res.send(msg);
 });
 
 
-app.get('/see_issues/:id', function (req, res) {
+
+//See the issues of a id
+app.get('/issue/:id', function (req, res) {
 
 	var issues = iss.getIssues(req.params.id);
 	var resjson = { "size" : issues.length };
-	if( issues.length > 0 )
+	if( issues.length > 0 ){
 		for( i = 0; i < issues.length; i++ )
-			resjson["Issue #" + (i+1)] = issues[i];
+			resjson["Issue #" + i] = issues[i];
+    res.status(200);
+    res.send(resjson);
+  }
 	else {
-		logger.info("No issues for the requeste")
+    res.status(404);
+    res.send("Not found");
+		logger.info("No issues for the id " + req.params.id);
 	}
-
-
-	res.send(resjson);
 
 });
 
+//Add a new issue for the id
+app.post('/issue', function(req,res){
+
+    iss.addIssue(req.body.id, req.body.issue);
+    res.status(201); //Resource created
+    res.send("added");
+
+});
+
+
+//Remove an issue for the given id
+app.delete('/issue', function(req,res){
+
+  var id = req.body.id;
+  var issue_id = req.body.issue;
+
+  if(iss.existID(id)){
+    iss.deleteIssue(id,issue_id);
+    res.status(200);
+    res.send("deleted");
+  }
+  else{
+    res.status(404);
+    res.send('Not found');
+    logger.error(id + " not exists");
+  }
+
+});
+
+app.get('*', function(req, res){
+  res.send('Not found', 404);
+});
 
 
 //Start the app

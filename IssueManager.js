@@ -4,45 +4,59 @@ function IssueManager(){
 	this.issues = new Map();
 }
 
-IssueManager.prototype.addIssue = function(chat_id, issue ){
+IssueManager.prototype.addIssue = function(id, issue ){
 	//If the chat_id is new
-	if( this.issues.has(chat_id))
-		this.issues.get(chat_id).push(issue);
+	if( this.issues.has(id))
+		this.issues.get(id).push(issue);
 	else
-		this.issues.set(chat_id,[issue]);
+		this.issues.set(id,[issue]);
 
 };
 
-IssueManager.prototype.getIssues = function(chat_id){
+IssueManager.prototype.getIssues = function(id){
 	var iss = [];
-	if(this.issues.has(chat_id))
-		iss = this.issues.get(chat_id);
+	if(this.issues.has(id))
+		iss = this.issues.get(id);
 
 	return iss;
 };
 
-IssueManager.prototype.getNIssues = function(chat_id){
+IssueManager.prototype.getNIssues = function(id){
 	var len = 0;
-	if(this.issues.has(chat_id))
-		len = this.issues.get(chat_id).length;
+	if(this.issues.has(id))
+		len = this.issues.get(id).length;
 	return len;
 };
 
-IssueManager.prototype.getLastIssue = function(chat_id){
+IssueManager.prototype.getLastIssue = function(id){
 	var iss ='';
-	if(this.issues.has(chat_id))
-		iss = this.issues.get(chat_id)[this.issues.get(chat_id).length -1];
+	if(this.issues.has(id))
+		iss = this.issues.get(id)[this.issues.get(id).length -1];
 
 
 	return iss;
 };
 
-IssueManager.prototype.deleteIssue = function(chat_id, issue_id){
+IssueManager.prototype.deleteIssue = function(id, issue_id){
 
-	if(this.issues.has(chat_id))
-		this.issues.get(chat_id).splice(issue_id,1);
+	if(this.issues.has(id)){
+		if(this.issues.get(id).length == 1 && issue_id == 0){
+			this.issues.delete(id);
+			console.log("Deleted id");
+		}
+		else{
+			this.issues.set(id,this.issues.get(id).splice(issue_id,1));
+			console.log("Deleted issue");
 
+		}
+	}
 };
+
+IssueManager.prototype.existID = function(id){
+
+	return this.issues.has(id)
+
+}
 
 
 
