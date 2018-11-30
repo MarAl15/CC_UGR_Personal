@@ -51,12 +51,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 //Adding functions to the app
 app.get('/', function (req, res) {
 
-	var n = iss.getNIssues();
 	var msg = {
    			"status": "OK",
    			"ejemplo": {
-				    "ruta": "/see_issues",
-                		    "valor": { "size" : n }
+				    "ruta": "/issue/foo",
+                		    "valor": { "size" : 0 }
 				   }
 		   }
   res.status(200);
