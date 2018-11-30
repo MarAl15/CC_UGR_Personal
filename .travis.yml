@@ -4,5 +4,6 @@ node_js:
   - 10
 install:
   - npm install mocha
+  - npm install supertest
 script:
   - npm test
