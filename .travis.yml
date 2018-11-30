@@ -5,5 +5,6 @@ node_js:
 install:
   - npm install mocha
   - npm install supertest
+  
 script:
   - npm test
