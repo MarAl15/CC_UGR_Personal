@@ -55,7 +55,7 @@ app.get('/', function (req, res) {
    			"status": "OK",
    			"ejemplo": {
 				    "ruta": "/issue/foo",
-                		    "valor": { "size" : 0 }
+                		    "valor": { "msg" : "Not found" }
 				   }
 		   }
   res.status(200);
@@ -77,7 +77,7 @@ app.get('/issue/:id', function (req, res) {
   }
 	else {
     res.status(404);
-    res.send("Not found");
+    res.send({"msg": "Not found"});
 		logger.info("No issues for the id " + req.params.id);
 	}
 
