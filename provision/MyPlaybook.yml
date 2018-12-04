@@ -28,10 +28,16 @@
       npm:
         path: "{{ project_location }}"
 
+    - name: Redirect port 80
+      become: yes
+      become_user: root
+      command:
+        iptables -t nat -A PREROUTING -p tcp -m tcp --dport 80 -j REDIRECT --to-ports 5000
+
     - name: Install pm2
       become: yes
       become_user: root
       command: npm install pm2 -g
 
     - name: Start service
-      command: pm2 start {{ project_location }}/IssueBot.js
+      command: pm2 start {{ project_location }}/IssueService.js
