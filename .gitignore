@@ -79,7 +79,7 @@ typings/
 .log
 
 # Playbook retry
-.retry
+MyPlaybook.retry
 
 # package-lock.json
 package-lock.json

@@ -1,7 +1,7 @@
 # Provisionamiento
 ## Explicación de herramientas utilizadas
 
-Se va a crear una máquina virtual en el sistema cloud de [Azure](https://azure.microsoft.com/es-es/) ya que en los ejercicios lo hice en un MV local de VirtualBoxtengo y ahora prefiero avanzar y desplegarla en una plataforma más profesional. También tengo una suscripción de educación gratuita y además, esta plataforma ofrece un amplio abanico de servicios y máquinas virtuales, entre ellas la que voy a usar. Se ha elegido Ubuntu Server 18.04 porque todo el proyecto se ha desarrollado con este SO y se conoce que funciona perfectamente en él.
+Se va a crear una máquina virtual en el sistema cloud de [Azure](https://azure.microsoft.com/es-es/) ya que en los ejercicios lo hice en un MV local de VirtualBox y ahora prefiero avanzar y desplegarla en una plataforma más profesional. También tengo una suscripción de educación gratuita y además, esta plataforma ofrece un amplio abanico de servicios y máquinas virtuales, entre ellas la que voy a usar. Se ha elegido Ubuntu Server 18.04 porque todo el proyecto se ha desarrollado con este SO y se conoce que funciona perfectamente en él.
 
 # Instrucciones para crear la MV en azure
 
@@ -18,7 +18,7 @@ Se va a crear una máquina virtual en el sistema cloud de [Azure](https://azure.
 - En etiquetas tampoco se ha introducido nada.
 - Una vez hecho todo se comprueban los datos de la MV en la sección Revisar y crear. Si todo está correcto pulsar crear. La creación de la MV lleva un rato...
 
-## Comrpobación de que la MV se ha creado
+## Comprobación de que la MV se ha creado
 
 Para comprobar que se ha creado la MV correctamente me he conectado con ssh a la IP de la MV y este es el resultado:
 ![SSH Azure](img/SSHAzure1.png)
@@ -86,4 +86,7 @@ MIMV ansible_host=23.99.224.134
 
 ![Playbook](img/Playbook.png)
 
-- Con esto nuestra aplicación ya estaría funcionando, ahora solo hay que probarla con Telegram y accediendo desde el explorador a http://23.99.224.134:5000/
+- Con esto nuestra aplicación ya estaría funcionando, ahora accediendo desde el explorador a http://23.99.224.134
+
+
+## Comprobación de provisión de un compañero
