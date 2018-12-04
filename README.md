@@ -59,5 +59,9 @@ despliegue https://shrouded-peak-63776.herokuapp.com/
 El funcionamiento de la aplicación se explica en este [documento](./docs/Funcionamiento.md).
 
 
+## Aprovisionamiento
+
+La aplicación se ha desplegado en Azure en una máquina virtual con *Ubuntu Server 18.04*. Se ha usado ansible para su aprovisionamiento. Más información sobre el aprovisionamiento e instrucciones para aprovisionar por tu cuenta en este [documento](docs/Provision.md).
+
 
 [Página web del proyecto](https://adritake.github.io/CC_UGR_Personal/).
