@@ -86,7 +86,7 @@ MIMV ansible_host=23.99.224.134
 
 ![Playbook](img/Playbook.png)
 
-- Con esto nuestra aplicación ya estaría funcionando, ahora accediendo desde el explorador a http://23.99.224.134
+- Con esto nuestra aplicación ya estaría funcionando, ahora accediendo desde el explorador a http://168.61.179.44/
 
 
 ## Comprobación de provisión de un compañero
