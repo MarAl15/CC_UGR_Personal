@@ -30,7 +30,7 @@ Para provisionar la MV se ha usado Ansible, para ello hay que incluir la IP de l
 - Abrir con privilegios de súper usuario el archivo */etc/ansible/hosts* e introducir la siguiente línea:
 ```
 [webservers]
-MIMV ansible_host=23.99.224.134
+MIMV ansible_host=168.61.179.44
 ```
 - Probar que Ansible tiene acceso a la MV ejecutando `ansible all -m ping -u adritake`. En mi caso obtuve el siguiente resultado:
 ![Ping ansible](img/PingAnsible.png)
@@ -81,6 +81,7 @@ MIMV ansible_host=23.99.224.134
       command: pm2 start {{ project_location }}/IssueService.js
 
 ```
+- Lo que hace el playbook es instalar git, nodejs y npm, crea un directorio y descarga mi repositorio de GitHub. Instala las dependencias del repositorio con npm. Para redirigir el tráfico del puerto 80 al 5000 que es el que usa la aplicación se ha usado el comando `iptables` tal y como se indica en esta [página](https://clouding.io/kb/redireccionar-el-puerto-587-al-25/). Se instala pm2 para correr el servicio en segundo plano y que no se cierre al terminar la conexión. Por último se lanza el servicio con pm2.
 
 - Al ejecutar `ansible-playbook provision/MyPlaybook.yml` se hacen todas las tareas y se debería obtener un resultado como este:
 
