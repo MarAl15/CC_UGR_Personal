@@ -63,6 +63,10 @@ El funcionamiento de la aplicación se explica en este [documento](./docs/Funcio
 
 La aplicación se ha desplegado en Azure en una máquina virtual con *Ubuntu Server 18.04*. Se ha usado ansible para su aprovisionamiento. Más información sobre el aprovisionamiento e instrucciones para aprovisionar por tu cuenta en este [documento](docs/Provision.md).
 
+El aprovisionamiento de este proyecto ha sido comprobado por Mar Alguacil Caballero ([@MarAl15](https://github.com/MarAl15)) en el siguiente [documento](https://github.com/MarAl15/ProyectoCC/blob/master/docs/provision-adritake.md).
+
+He comprobado el aprovisionamiento de Mar Alguacil Caballero ([@MarAl15](https://github.com/MarAl15)) en el siguiente [documento](./docs/Provision.md).
+
 MV: http://168.61.179.44/
 
 

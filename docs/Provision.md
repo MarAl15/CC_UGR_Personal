@@ -81,6 +81,7 @@ MIMV ansible_host=168.61.179.44
       command: pm2 start {{ project_location }}/IssueService.js
 
 ```
+
 - Lo que hace el playbook es instalar git, nodejs y npm, crea un directorio y descarga este repositorio de GitHub. Instala las dependencias del repositorio con npm. Para redirigir el tráfico del puerto 80 al 5000 que es el que usa la aplicación se ha usado el comando `iptables` tal y como se indica en esta [página](https://clouding.io/kb/redireccionar-el-puerto-587-al-25/). Se instala pm2 para correr el servicio en segundo plano y que no se cierre al terminar la conexión. Por último se lanza el servicio con pm2.
 
 - Al ejecutar `ansible-playbook provision/MyPlaybook.yml` se hacen todas las tareas y se debería obtener un resultado como este:
@@ -91,3 +92,32 @@ MIMV ansible_host=168.61.179.44
 
 
 ## Comprobación de provisión de un compañero
+
+Se va a comprobar la provisión de María del Mar Alguacil Caballero ([@MarAl15](https://github.com/MarAl15)). Para ello voy a crear una máquina virtual como indica en este [documento](https://github.com/MarAl15/ProyectoCC/blob/master/docs/mv-azure.md) y se va a aprovisionar tal y como indica en este otro [documento](https://github.com/MarAl15/ProyectoCC/blob/master/docs/provision.md).
+
+- He creado una máquina virtual en Azure como se ha indicado anteriormente:
+
+![provision mar 1](./img/provision-mar-1.png)
+![provision mar 2](./img/provision-mar-2.png)
+
+- He clonado el [repositorio](https://github.com/MarAl15/ProyectoCC) de Mar `git clone https://github.com/MarAl15/ProyectoCC.git`
+- En el repositorio, dentro de *provision/ansible_hosts* he tenido que cambiar la ip y el contenido del archivo se ha quedado así:
+```
+[azure]
+ubuntu16 ansible_ssh_port=22 ansible_ssh_host=40.89.153.52
+
+[azure:vars]
+ansible_ssh_private_key_file=~/.ssh/id_rsa
+ansible_ssh_user=usuario
+```
+- Se comprueba el estado de la MV haciendole ping con Ansible `ansible ubuntu16 -m ping`:
+
+![provision mar 3](./img/provision-mar-3.png)
+
+- Se ha ejecutado el [playbook](https://github.com/MarAl15/ProyectoCC/blob/master/provision/receta.yml) con `ansible-playbook receta.yml` y se ha obtenido el siguiente resultado:
+
+![provision mar 4](./img/provision-mar-4.png)
+
+- Se comprueba que funciona correctamente accediendo a http://40.89.153.52/ y se obtiene el siguiente mensaje JSON:
+
+![provision mar 5](./img/provision-mar-5.png)
