@@ -1,5 +1,5 @@
 ---
-- hosts: webservers
+- hosts: all
   user: adritake
 
   vars:
@@ -9,7 +9,7 @@
   tasks:
     - name: Install {{ packages }}
       become: yes
-      become_user: adritake
+      become_user: root
       apt:
         name: "{{ packages }}"
         state: present
