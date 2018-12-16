@@ -8,3 +8,9 @@ He encontrado esta [página web](https://azurespeedtest.azurewebsites.net/) dond
 ![latencia.png](./img/Latencia.png)
 
 Como se puede observar, la región con mejor latencia es Francia Central por lo que será la elegida para albergar nuestro servicio.
+
+## Elección de imagen
+
+La imagen elegida para nuestro servicio va a ser Ubuntu Server 18.04 LTS porque como se indica en esta [página](https://www.colocationamerica.com/blog/best-operating-systems-for-business-and-personal-use) o en esta [otra](https://www.whoishostingthis.com/compare/operating-systems/), Ubuntu es la imagen que más se usa por ser sencilla, confiable y flexible. Además de tener las ventajas de ser software libre, se escoge la versión LTS (Long Term Support) para que esté mantenida por un largo periodo de tiempo.
+
+## Script de Automatización
