@@ -69,5 +69,9 @@ He comprobado el aprovisionamiento de Mar Alguacil Caballero ([@MarAl15](https:/
 
 MV: 168.61.179.44
 
+## Automatización
+
+Se ha creado un [script](./acopio.sh) de bash donde se crear una MV en Azure con imagen Ubuntu Server 18.04 LTS. Además se prepara la imagen para poder acceder a ella vía http y se aprovisiona con un [playbook](./provision/MyPlaybook.yml) de Ansible. Documentación detallada sobre la automatización se encuentra en el siguiente [documento](./docs/Automatizacion.md)
+
 
 [Página web del proyecto](https://adritake.github.io/CC_UGR_Personal/).
