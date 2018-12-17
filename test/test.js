@@ -61,6 +61,18 @@ describe('Service test', function() {
 			.expect(404,done);
 	});
 
+	it('Returns the error log', function(done){
+		request(app)
+			.get('/errorlog/10')
+			.expect(200,done);
+	});
+
+	it('Returns the combined log', function(done){
+		request(app)
+			.get('/combinedlog/10')
+			.expect(200,done);
+	});
+
 });
 
 

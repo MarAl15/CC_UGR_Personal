@@ -25,6 +25,10 @@ if (process.env.NODE_ENV !== 'production') {
   }));
 }
 
+//Create the logs
+logger.error("Error log initialized");
+logger.info("Combined log initialized");
+
 
 
 //Webapp initialization
@@ -112,8 +116,100 @@ app.delete('/issue', function(req,res){
 
 });
 
+//Get the error log
+var fs = require('fs');//File reader
+
+app.get('/errorlog/:lines',function(req,res){
+
+  //Extract the lines param
+  var n_line = parseInt(req.params.lines,10);
+  if (n_line > 0){
+    //Read asynchronously the file
+    fs.readFile('error.log', 'utf8', (err, data) => {
+
+      if (err){
+        res.status(500);
+        res.send('An error ocurred during retrieving the error log file');
+        logger.error("Couldn't get the error log file.")
+      }
+      else {
+        //Split the data in lines
+        var lines = data.toString('utf-8').split("\n");
+        //Get the number of lines
+        var lines_size = lines.length;
+        //If the desired amount of lines is bigger than the total we use the total
+        if(n_line > lines_size)
+          n_line = lines_size;
+        //Index where we start reading lines
+        var i_start = lines_size - n_line;
+        //Variable where we store the lines
+        var ret = lines[i_start] + "\n";
+        //Take the last n_lines of the file
+        for( i = i_start; i < lines_size; i++){
+          ret += lines[i] + "\n";
+        }
+
+        //Return the result
+        res.status(200);
+        res.send(ret);
+      }
+    });
+  }//line > 0
+  else{
+    res.status(200);
+    res.send("");
+  }
+
+});
+
+//Get the combined log
+app.get('/combinedlog/:lines',function(req,res){
+
+  //Extract the lines param
+  var n_line = parseInt(req.params.lines,10);
+  if (n_line > 0){
+    //Read asynchronously the file
+    fs.readFile('combined.log', 'utf8', (err, data) => {
+
+      if (err){
+        res.status(500);
+        res.send('An error ocurred during retrieving the combined log file');
+        logger.error("Couldn't get the combined log file.")
+      }
+      else {
+        //Split the data in lines
+        var lines = data.toString('utf-8').split("\n");
+        //Get the number of lines
+        var lines_size = lines.length;
+        //If the desired amount of lines is bigger than the total we use the total
+        if(n_line > lines_size)
+          n_line = lines_size;
+        //Index where we start reading lines
+        var i_start = lines_size - n_line;
+        //Variable where we store the lines
+        var ret = lines[i_start] + "\n";
+        //Take the last n_lines of the file
+        for( i = i_start; i < lines_size; i++){
+          ret += lines[i] + "\n";
+        }
+
+        //Return the result
+        res.status(200);
+        res.send(ret);
+      }
+    });
+  }//line > 0
+  else{
+    res.status(200);
+    res.send("");
+  }
+
+});
+
+
+
 app.get('*', function(req, res){
-  res.send('Not found', 404);
+  res.send('NOT FOUND', 404);
 });
 
 
