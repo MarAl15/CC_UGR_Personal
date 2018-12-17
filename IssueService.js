@@ -207,7 +207,6 @@ app.get('/combinedlog/:lines',function(req,res){
 });
 
 
-
 app.get('*', function(req, res){
   res.send('NOT FOUND', 404);
 });
