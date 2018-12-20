@@ -15,7 +15,7 @@ La imagen elegida para nuestro servicio va a ser Ubuntu Server 18.04 LTS porque 
 
 ## Script de Automatización
 
-Para automatizar la creación de la máquina virtual y su aprovisionamiento se va a crear un script de bash. Los prerrequisitos para ejecutar este script es tener una cuenta y suscripción con dinero en Azure y por otro lado tener instalado el CLI de Azure. En el siguiente apartado se explica el funcionamiento del script:
+Para automatizar la creación de la máquina virtual se va a crear un script de bash. Los prerrequisitos para ejecutar este script es tener una cuenta y suscripción con dinero en Azure y por otro lado tener instalado el CLI de Azure. En el siguiente apartado se explica el funcionamiento del script:
 
 ### Funcionamiento del script
 El script se encuentra en el siguiente [documento](../acopio.sh).
@@ -46,10 +46,12 @@ then
   az group create -l $REGION -n $GRUPO
 fi
 ```
-- Creamos la MV con los parámetros indicados en las variables. También se indica que se generen claves ssh y que la salida sea en JSON.
+- Creamos la MV con los parámetros indicados en las variables. También se indica que se generen claves ssh y que la salida sea en JSON y que la IP sea estática:
+
+![ip estatica](./img/ipestatica.png)
 
 ```bash
-RESULTADOMV=$(az vm create --resource-group $GRUPO --name $NOMBREMV --image $IMAGEN --generate-ssh-keys --output json --verbose)
+az vm create --resource-group $GRUPO --name $NOMBREMV --image $IMAGEN --generate-ssh-keys --output json --verbose --public-ip-address-allocation static
 ```
 - Por defecto la MV se crea con el puerto 22 (SSH) abierto pero el puerto 80 se tiene que abrir:
 
@@ -57,17 +59,7 @@ RESULTADOMV=$(az vm create --resource-group $GRUPO --name $NOMBREMV --image $IMA
 az vm open-port --resource-group $GRUPO --name $NOMBREMV --port 80
 ```
 
-- Ahora obtenemos la IP de la MV creada haciéndole una query al resultado en JSON de la salida de la creación.
-
-```bash
-IP=$(echo $RESULTADOMV | jq -r '.publicIpAddress')
-echo $IP
-```
-- Por último ejecutamos el playbook de Ansible pasándole una lista de hosts, en este caso, la IP de la MV con una coma detrás para que esté en formato lista.
-```bash
-ansible-playbook ./provision/MyPlaybook.yml -i $IP,
-```
-- Una vez realizados todos estos pasos, el servicio debería de estar funcionando en la MV. Para comprobarlo, simplemente accedemos a la IP de la MV desde un explorador y debería de devolver un JSON `{Status: OK}`
+Una vez hecho esto nuestra máquina debería estar creada e inicializada correctamente en Azure.
 
 ### Resultados del script
 A continuación se muestran capturas de pantalla con las salidas de haber ejecutado el [script](../acopio.sh)
@@ -75,7 +67,22 @@ A continuación se muestran capturas de pantalla con las salidas de haber ejecut
 ![acopio1.png](./img/acopio1.png)
 ![acopio2.png](./img/acopio2.png)
 ![acopio3.png](./img/acopio3.png)
+![acopio4.png](./img/acopio4.png)
 
-Si accedemos a la IP de la MV desde un explorador obtenemos la siguiente respuesta:
+## Aprovisionamiento de la máquina
 
-![acopiotest.png](./img/acopiotest.png)
+Para aprovisionar la MV se va a proceder de igual manera que en el [hito anterior](./Provision.md). Se va a usar el siguiente [playbook](../provision/MyPlaybook.yml) y la IP proporcionada al ejecutar el script anterior:
+
+![ip MV](./img/IPMV.png)
+
+Ejecutamos `ansible-playbook provision/MyPlaybook.yml -i 40.89.158.239,` donde el parámetro *-i* indica una lista de IP's donde se desea ejecutar el playbook.
+
+### Resultado del Aprovisionamiento
+
+![aprovisionamiento acopio](./img/acopioprovision.png)
+
+### Comprobación del despliegue
+
+Para comprobar si la aplicación está funcionando correctamente se ha accedido a su IP mediante el explorador http://40.89.158.239/ y se ha obtenido:
+
+![test acopio](./img/acopiotest.png)
