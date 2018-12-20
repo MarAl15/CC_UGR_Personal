@@ -20,7 +20,7 @@ Para automatizar la creación de la máquina virtual se va a crear un script de 
 ### Funcionamiento del script
 El script se encuentra en el siguiente [documento](../acopio.sh).
 
-- Primero crea una serie de variables donde guardamos los parámetros de la MV. Establecemos como la región Francia central, la imagen va a ser la última de Ubuntu Server 18.04, el grup de recursos se va a llamar "GrupoIssue" y la MV se va a llamar "MVIssue".
+- Primero crea una serie de variables donde guardamos los parámetros de la MV. Establecemos como la región Francia central, la imagen va a ser la última de Ubuntu Server 18.04, el grupo de recursos se va a llamar "GrupoIssue" y la MV se va a llamar "MVIssue".
 ```bash
 REGION="FranceCentral"
 IMAGENSTR="Ubuntu Server 18.04 LTS"
