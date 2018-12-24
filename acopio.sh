@@ -10,22 +10,10 @@ IMAGEN="Canonical:UbuntuServer:18.04-LTS:latest"
 echo "Comienzo de la creación de la máquina virtual en Azure..."
 echo "Se va a crear una máquina virtual con imagen $IMAGENSTR en la region $REGION"
 
-echo "Por favor, haz login en Azure"
-sleep 1s
+#Creamos el grupo de recursos
+echo "Creando el grupo de recursos"
+az group create -l $REGION -n $GRUPO
 
-#Hacer login en Azure
-az login
-
-echo "¿Desea crear el grupo de recursos? Escriba [y/n]"
-
-read RESPUESTA
-
-if [[ $RESPUESTA == [Yy] ]]
-then
-  #Creamos el grupo de recursos
-  echo "Creando el grupo de recursos"
-  az group create -l $REGION -n $GRUPO
-fi
 
 echo "Creando máquina virtual"
 #Creamos una MV con el grupo de recursos "GrupoIssue", se llama "MVIssue", la imagen usada es Ubuntu Server 18.04 LTS
@@ -38,4 +26,4 @@ echo "Abriendo el puerto 80"
 az vm open-port --resource-group $GRUPO --name $NOMBREMV --port 80
 
 
-echo "Máquina virtual creada y aprovisionada correctamente"
+echo "Máquina virtual creada correctamente"

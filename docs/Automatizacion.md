@@ -28,23 +28,12 @@ GRUPO="GrupoIssue"
 NOMBREMV="MVIssue"
 IMAGEN="Canonical:UbuntuServer:18.04-LTS:latest"
 ```
-- A continuación te pide que hagas login en Azure. Se te redirigirá la página de login de Azure.
+
+- Creamos el grupo de recuros en Francia Central con el nombre GrupoIssue
 ```bash
-az login
-```
-- Se pregunta si desea crear el grupo de recursos, se ha de seleccionar sí si es la primera vez que se ejecuta el script.
-
-```bash
-echo "¿Desea crear el grupo de recursos? Escriba [y/n]"
-
-read RESPUESTA
-
-if [[ $RESPUESTA == [Yy] ]]
-then
-  #Creamos el grupo de recursos
-  echo "Creando el grupo de recursos"
-  az group create -l $REGION -n $GRUPO
-fi
+#Creamos el grupo de recursos
+echo "Creando el grupo de recursos"
+az group create -l $REGION -n $GRUPO
 ```
 - Creamos la MV con los parámetros indicados en las variables. También se indica que se generen claves ssh y que la salida sea en JSON y que la IP sea estática:
 
@@ -67,7 +56,6 @@ A continuación se muestran capturas de pantalla con las salidas de haber ejecut
 ![acopio1.png](./img/acopio1.png)
 ![acopio2.png](./img/acopio2.png)
 ![acopio3.png](./img/acopio3.png)
-![acopio4.png](./img/acopio4.png)
 
 ## Aprovisionamiento de la máquina
 
