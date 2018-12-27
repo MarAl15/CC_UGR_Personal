@@ -72,7 +72,7 @@ MV: 168.61.179.44
 
 ## Automatización
 
-Se ha creado un [script](./acopio.sh) de bash donde se crear una MV en Azure con imagen Ubuntu Server 18.04 LTS. Además se prepara la imagen para poder acceder a ella vía http y se aprovisiona con un [playbook](./provision/MyPlaybook.yml) de Ansible. Documentación detallada sobre la automatización se encuentra en el siguiente [documento](./docs/Automatizacion.md)
+Se ha creado un [script](./acopio.sh) de bash donde se crear una MV en Azure con imagen Ubuntu Server 18.04 LTS. Además, se prepara la imagen para poder acceder a ella vía http y se aprovisiona con un [playbook](./provision/MyPlaybook.yml) de Ansible. Documentación detallada sobre la automatización se encuentra en el siguiente [documento](./docs/Automatizacion.md)
 
 MV2: 40.89.152.162
 
