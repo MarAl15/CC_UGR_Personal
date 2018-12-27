@@ -42,7 +42,7 @@ var iss = new IssueManager();
 
 
 //Seting the ports to the app
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 80;
 app.set('port', port);
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded());
