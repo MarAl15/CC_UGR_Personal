@@ -4,10 +4,8 @@ node_js:
   - 10
 
 before_install:
-- npm install n
-- sudo ./node_modules/.bin/n stable
-- rm -rf ~/.nvm
-
+  - sudo apt install nodejs npm
+  - sudo apt install npm
 install:
   - npm install mocha
   - npm install
