@@ -3,8 +3,13 @@ sudo: required
 node_js:
   - 10
 
+before_install:
+- npm install n
+- sudo ./node_modules/.bin/n stable
+- rm -rf ~/.nvm
+
 install:
-  - npm install mocha -g
+  - npm install mocha
   - npm install
 
-script: "sudo $(which npm) test"
+script: sudo npm test
