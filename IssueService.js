@@ -45,6 +45,7 @@ var iss = new IssueManager();
 var port = process.env.PORT || 80;
 var admin_port = process.env.PORT || 5000;
 
+//Check wether the app it's going to be tested or deployed
 if(process.argv[2] == "production")
   app.set('port', port);
 else
