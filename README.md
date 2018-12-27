@@ -21,17 +21,20 @@ Usualmente la gestión de tareas a realizar en un proyecto se suele llevar a cab
 
 Tras un estudio de las [arquitecturas](http://jj.github.io/CC/documentos/temas/Arquitecturas_para_la_nube) posibles para el desarrollo del proyecto, se ha optado por una arquitectura basada en microservicios ya que se adapta perfectamente a lo que se pretende hacer y es necesario que esté alojada en la nube y a la filosofía de la asignatura Cloud Computing.
 
+El proyecto contará con dos microservicios:
 
-El servicio será desarrollado en node.js y será desplegado en un servidor en la nube. Para este desarrollo existe una framework para node.js con el que se puede programar toda la funcionalidad de las peticions REST.
+- Un "servicio almacenador" que será la base de datos en MongoDB.
+- Un "servicio gestor" que será el encargado de enviar y recibir datos a los usuarios y procesar los comandos que estos le envían. En general los comandos a realizar por este servicio serán almacenar issues o milestones en la base de datos o enviar los ya almacenados a los usuarios.
+
+Actualmente el proyecto solo cuenta con el servicio gestor. Este servicio está desarrollado en nodejs para ser desplegado en una máquina virtual en algún servidor. Para este desarrollo existe un framework para nodejs con el que se puede programar toda la funcionalidad de las peticiones REST. El framework usado es [Express](https://expressjs.com/es/).
+
+Para testear el servicio se usa la librería [supertest](https://github.com/visionmedia/supertest) y se usa la herramienta de integración continua [TravisCI](https://travis-ci.com/).
+
+Actualmente el proyecto cuenta con un programa en nodejs llamado [IssueService](./IssueService.js) que es el encargado de antender todas las peticiones REST y escribir en los logs. Por otro lado hay una clase llamada [IssueManager](./IssueManager.js) que es la que realiza toda la funcionalidad de almacenar los datos en un Map. En versiones futuras esta clase se encargará de enviar los datos al servicio almacenador.
 
 En cuanto al almacenamiento de datos se usará una base de datos [MongoDB](https://www.mongodb.com/es) la cual será desplegada en la nube. En ella se almacenarán las distintas tablas necesarias para la gestión de issues y milestones.
 
 La comunicación entre servicios será realizada por brokers, en especial [RabbitMQ](https://www.rabbitmq.com/).
-
-Por lo tanto el proyecto contará con dos microservicios:
-
-- Un "servicio almacenador" que será la base de datos en MongoDB.
-- Un "servicio gestor" que será el encargado de enviar y recibir datos a los usuarios y procesar los comandos que estos le envían. En general los comandos a realizar por este servicio serán almacenar issues o milestones en la base de datos o enviar los ya almacenados a los usuarios.
 
 
 ## Descripción de los milestones del proyecto
