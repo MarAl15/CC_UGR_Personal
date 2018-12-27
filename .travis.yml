@@ -3,10 +3,6 @@ sudo: required
 node_js:
   - 10
 
-before_install:
-  - sudo apt-get install npm
-  - sudo npm install mocha
-
 install:
   - npm install mocha
   - npm install

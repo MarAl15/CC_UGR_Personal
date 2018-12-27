@@ -43,12 +43,17 @@ var iss = new IssueManager();
 
 //Seting the ports to the app
 var port = process.env.PORT || 80;
-app.set('port', port);
+var admin_port = process.env.PORT || 5000;
+
+if(process.argv[2] == "production")
+  app.set('port', port);
+else
+  app.set('port', admin_port)
+
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-
 
 
 
@@ -217,5 +222,6 @@ var server = app.listen(app.get('port'), function () {
   console.log('App listening on port ' + app.get('port'));
 	logger.info('App listening on port ' + app.get('port'));
 });
+
 
 module.exports = server
