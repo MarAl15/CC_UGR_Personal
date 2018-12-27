@@ -20,6 +20,8 @@ Para automatizar la creación de la máquina virtual se va a crear un script de 
 ### Funcionamiento del script
 El script se encuentra en el siguiente [documento](../acopio.sh).
 
+- Para hacerlo ejecutable se le ha otorgado permisos de ejecución con `chmod +x acopio.sh`. Con esto se puede ejecutar el script simplemente escribiendo `./acopio.sh`
+
 - Primero crea una serie de variables donde guardamos los parámetros de la MV. Establecemos como la región Francia central, la imagen va a ser la última de Ubuntu Server 18.04, el grupo de recursos se va a llamar "GrupoIssue" y la MV se va a llamar "MVIssue".
 ```bash
 REGION="FranceCentral"

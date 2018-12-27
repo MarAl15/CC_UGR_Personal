@@ -34,4 +34,6 @@
       command: npm install pm2 -g
 
     - name: Start service
+      become: yes
+      become_user: root
       command: pm2 start {{ project_location }}/IssueService.js
