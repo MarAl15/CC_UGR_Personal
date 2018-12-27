@@ -7,7 +7,7 @@ before_install:
   - sudo apt-get install nodejs npm
   - sudo apt-get install npm
 install:
-  - npm install mocha
+  - sudo npm install mocha
   - npm install
 
 script: sudo mocha --exit
