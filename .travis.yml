@@ -4,7 +4,6 @@ node_js:
   - 10
 install:
   - npm install mocha
-  - npm install -g
+  - npm install
 
-script:
-  - sudo npm test
+script: "sudo $(type -P npm) test"
