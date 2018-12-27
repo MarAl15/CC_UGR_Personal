@@ -1,10 +1,10 @@
 language: node_js
-sudo: false
+sudo: true
 node_js:
   - 10
 install:
   - npm install mocha
   - npm install
-  
+
 script:
   - npm test

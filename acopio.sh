@@ -18,7 +18,7 @@ az group create -l $REGION -n $GRUPO
 echo "Creando máquina virtual"
 #Creamos una MV con el grupo de recursos "GrupoIssue", se llama "MVIssue", la imagen usada es Ubuntu Server 18.04 LTS
 # y se van a generar claves ssh. La salida se hará en formato JSON. Además se indica que la ip sea estática para que
-# no cambie con el tiempo.
+# no cambie con el tiempo. Se le indica que se quiere la imagen Standard_A0
 az vm create --resource-group $GRUPO --name $NOMBREMV --image $IMAGEN --generate-ssh-keys --output json --verbose --public-ip-address-allocation static --size Standard_A0
 
 echo "Abriendo el puerto 80"

@@ -13,6 +13,13 @@ Como se puede observar, la región con mejor latencia es Francia Central por lo 
 
 La imagen elegida para nuestro servicio va a ser Ubuntu Server 18.04 LTS porque como se indica en esta [página](https://www.colocationamerica.com/blog/best-operating-systems-for-business-and-personal-use) o en esta [otra](https://www.whoishostingthis.com/compare/operating-systems/), Ubuntu es la imagen que más se usa por ser sencilla, confiable y flexible. Además de tener las ventajas de ser software libre, se escoge la versión LTS (Long Term Support) para que esté mantenida por un largo periodo de tiempo.
 
+## Elección del tamaño de imagen
+
+Se ha elegido el tamaño de imagen Standard_A0 debido a los siguientes motivos.
+
+- Es la imagen más barata.
+- El servicio está en fase de desarrollo por lo que su uso va a ser muy reducido y, por lo tanto, no es necesario usar una imagen con más prestaciones.
+
 ## Script de Automatización
 
 Para automatizar la creación de la máquina virtual se va a crear un script de bash. Los prerrequisitos para ejecutar este script es tener una cuenta y suscripción con dinero en Azure y por otro lado tener instalado el CLI de Azure. En el siguiente apartado se explica el funcionamiento del script:
