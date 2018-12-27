@@ -14,7 +14,6 @@ Usualmente la gestión de tareas a realizar en un proyecto se suele llevar a cab
 - Asignación de deadlines a issues.
 - Notificaciones de deadlines en la conversación.
 
-La idea es que una vez creado el servicio, se pueda usar como cliente un bot de Telegram para incluir la funcionalidad en la aplicación.
 
 
 
@@ -34,7 +33,6 @@ Por lo tanto el proyecto contará con dos microservicios:
 - Un "servicio almacenador" que será la base de datos en MongoDB.
 - Un "servicio gestor" que será el encargado de enviar y recibir datos a los usuarios y procesar los comandos que estos le envían. En general los comandos a realizar por este servicio serán almacenar issues o milestones en la base de datos o enviar los ya almacenados a los usuarios.
 
-Se pretende que cuando se termine el proyecto, el cliente del servicio sea un bot de Telegram.
 
 ## Descripción de los milestones del proyecto
 
