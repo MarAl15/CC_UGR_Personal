@@ -4,7 +4,7 @@ node_js:
   - 10
 install:
   - npm install mocha
-  - npm install
+  - npm install -g
 
 script:
-  - npm test
+  - sudo npm test
