@@ -1,6 +1,8 @@
 ---
 - hosts: all
   user: adritake
+  become: yes
+  become_user: root
 
   vars:
     - packages: ["nodejs","git","npm"]
