@@ -22,7 +22,7 @@ Hasta ahora se había usado Ansible para provisionar máquinas virtuales, el cua
 He encontrado la ventaja de que se usan las órdenes tal y como se usan en el ordenador de trabajo, por lo tanto es fácil de escribir y probar. El inconveniente es que es sólo válido para Ubuntu. Para otros sistemas operativos será necesario usar el [playbook](../provision/MyPlaybook.yml) que creé para el hito anterior.
 
 ### Región del centro de datos
-Se han usado el mismo criterio que en el hito anterior explicado en este [documento](./Automatización.md). La región escogida ha sido Francia Central por tener la menor latencia.
+Se han usado el mismo criterio que en el hito anterior explicado en este [documento](./Automatizacion.md). La región escogida ha sido Francia Central por tener la menor latencia.
 
 
 
