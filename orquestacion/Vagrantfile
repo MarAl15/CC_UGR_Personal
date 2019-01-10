@@ -1,70 +1,82 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+# Se requiere la gem 'json' para poder parsear de JSON a hash map
+# Cómo leer archivos json extraído de aquí (https://hackhands.com/ruby-read-json-file-hash/)
+require 'json'
 
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
-Vagrant.configure("2") do |config|
-  # The most common configuration options are documented and commented below.
-  # For a complete reference, please see the online documentation at
-  # https://docs.vagrantup.com.
+# Se lee el archivo azdata.json donde se almacenan los datos de la cuenta
+# de azure necesarios para conectarse con vagrant. Para crear el archivo
+# azdata.json es necesario ejecutar el comando $ az ad sp create-for-rbac > azdata.json
+# que crea una aplicación de directorios activa de azure con acceso al gestor de recursos
+# de azure para la subscripción activada. El resultado de ese comando es un json que es
+# guardado en el archivo azdata.json gracias al operador '>'
+file = File.read('azdata.json')
 
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "base"
+# Parseamos el archivo JSON a un hashmap
+hash = JSON.parse(file)
 
-  # Disable automatic box update checking. If you disable this, then
-  # boxes will only be checked for updates when the user runs
-  # `vagrant box outdated`. This is not recommended.
-  # config.vm.box_check_update = false
+# Extraemnos los datos del hashmap. Los datos de un hash map se extraen
+# de la siguiente manera -> value = hashmap['key']
 
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine. In the example below,
-  # accessing "localhost:8080" will access port 80 on the guest machine.
-  # NOTE: This will enable public access to the opened port
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
+TENANT_ID = hash['tenant']
+CLIENT_ID = hash['appId']
+CLIENT_SECRET = hash['password']
 
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine and only allow access
-  # via 127.0.0.1 to disable public access
-  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+# Leemos el id de la subscripcion activa del archivo idsubscripcion.txt que se ha creado de manera
+# parecida al archivo anterior: az account list --query "[?isDefault].id" -o tsv > idsubscripcion.txt
+# En esta ocasión se va leyendo línea a línea (Aunque solo haya una) y se concatena en la variable SUBSCRIPTION_ID
+# Cómo leer archivos en ruby extraído de aquí (https://stackoverflow.com/questions/5545068/what-are-all-the-common-ways-to-read-a-file-in-ruby)
+SUBSCRIPTION_ID = ''
+f = File.open("idsubscripcion.txt", "r")
+f.each_line do |line|
+  SUBSCRIPTION_ID += line
+end
 
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
+#Eliminamos el salto de linia de la variable con el método chomp (https://ruby-doc.org/core-2.2.0/String.html)
+SUBSCRIPTION_ID = SUBSCRIPTION_ID.chomp
 
-  # Create a public network, which generally matched to bridged network.
-  # Bridged networks make the machine appear as another physical device on
-  # your network.
-  # config.vm.network "public_network"
 
-  # Share an additional folder to the guest VM. The first argument is
-  # the path on the host to the actual folder. The second argument is
-  # the path on the guest to mount the folder. And the optional third
-  # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
+# Versión de la API de vagrant que se va a usar
+API_version = '2'
 
-  # Provider-specific configuration so you can fine-tune various
-  # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
-  #
-  # config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  #
-  #   # Customize the amount of memory on the VM:
-  #   vb.memory = "1024"
-  # end
-  #
-  # View the documentation for the provider you are using for more
-  # information on available options.
+# Configuramos Vagrant en la versión de API indicada anteriormente. |config| indica la variable
+# de configuración de vagrant que se va a usar dentro del método
+Vagrant.configure(API_version) do |config|
 
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
+  # Usamos el box que hemos descargado previamente con el comando $ vagrant box add azure https://github.com/azure/vagrant-azure/raw/v2.0/dummy.box --provider azure
+  config.vm.box = 'azure'
+
+  # Indicamos la localización de nuestra key para que se copie en la MV y podamos conectarnos
+  # por SSH
+  config.ssh.private_key_path = '~/.ssh/id_rsa'
+
+  # Configuramos el proveedor de la MV con las variables que hemos extraído al principio
+  config.vm.provider :azure do |azure, override|
+
+    # Claves para la conexión con azure
+    azure.tenant_id = TENANT_ID
+    azure.client_id = CLIENT_ID
+    azure.client_secret = CLIENT_SECRET
+    azure.subscription_id = SUBSCRIPTION_ID
+
+    # El grupo de recursos se llama hito5
+    azure.resource_group_name = "hito5"
+    # La MV creada se va a llamar MVIssue
+    azure.vm_name = "mvissue"
+    # El tamaño de la imágen es Standard_A0 (prestaciones básicas)
+    azure.vm_size = "Standard_A0"
+    # La imágen seleccionada es Ubuntu Sever 18.04 LTS
+    azure.vm_image_urn = "Canonical:UbuntuServer:18.04-LTS:latest"
+    # La localización del centro de datos es Francia central
+    azure.location = "francecentral"
+    # Necesitamos abrir el puerto 80 de la MV
+    azure.tcp_endpoints = 80
+
+    # El resto de parámetros se deja por defecto
+
+
+  end
+
+    # La provisión de la MV va a ser por un script llamado "script.sh" y que se encuentra en este mismo directorio
+    # (https://www.vagrantup.com/docs/provisioning/shell.html)
+    config.vm.provision "shell", path: "script.sh"
+
 end

@@ -84,7 +84,11 @@ MyPlaybook.retry
 # package-lock.json
 package-lock.json
 
-
-
 # node_modules
 node_modules/
+
+# Vagrant files
+vagrant
+.vagrant
+azdata.json
+idsubscripcion.txt
