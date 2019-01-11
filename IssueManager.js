@@ -1,63 +1,116 @@
+//The client that will connect to the mongo database
+var MongoClient = require('mongodb').MongoClient;
+
+//URL of the database
+var url = "mongodb://localhost:27017/";
+//Name of de database
+var dbname = "IssueDB"
+//Name of the collection
+var colname = "issues"
+
 
 //Class IssueManager
 function IssueManager(){
-	this.issues = new Map();
+	//Connect to mongodb and create the database
+	MongoClient.connect(url + dbname, function(err, db) {
+	  if (err) throw err;
+	  db.close();
+	});
+
+	//Create the collection "issues"
+	MongoClient.connect(url, function(err, db) {
+	  if (err) throw err;
+	  var dbo = db.db(dbname);
+	  dbo.createCollection(colname, function(err, res) {
+	    if (err) throw err;
+	    db.close();
+	  });
+	});
 }
 
-IssueManager.prototype.addIssue = function(id, issue ){
-	//If the id is new
-	if( this.issues.has(id))
-		this.issues.get(id).push(issue);
-	else
-		this.issues.set(id,[issue]);
+IssueManager.prototype.addIssue = function(userid, issue ){
+	getLastIssueID(userid).then(function(issueid){
+		issueid = issueid +1;
+
+		MongoClient.connect(url, function(err, db) {
+			if (err) throw err;
+			var dbo = db.db(dbname);
+			var myobj = { userid: userid, issueid: issueid, issue: issue };
+			dbo.collection(colname).insertOne(myobj, function(err, res) {
+				if (err) throw err;
+				db.close();
+			});
+		});
+
+	},function(error){console.log(error)});
 
 };
 
-IssueManager.prototype.getIssues = function(id){
-	var iss = [];
-	if(this.issues.has(id))
-		iss = this.issues.get(id);
+IssueManager.prototype.getIssues = function(userid){
 
-	return iss;
+	return new Promise(function(resolve,reject){
+		MongoClient.connect(url, function(err, db) {
+		  if (err) throw err;
+		  var dbo = db.db(dbname);
+		  dbo.collection(colname).find({userid: userid}).toArray(function(err, result) {
+		    if (err) reject(err);
+				db.close();
+		    resolve(result);
+		  });
+		});
+	})
+
 };
 
-IssueManager.prototype.getNIssues = function(id){
-	var len = 0;
-	if(this.issues.has(id))
-		len = this.issues.get(id).length;
-	return len;
+
+IssueManager.prototype.deleteIssue = function(userid, issueid){
+
+	MongoClient.connect(url, function(err, db) {
+		  if (err) throw err;
+		  var dbo = db.db(dbname);
+		  var myquery = { userid: userid, issueid: issueid };
+		  dbo.collection(colname).deleteOne(myquery, function(err, obj) {
+		    if (err) throw err;
+		    db.close();
+		  });
+		});
 };
 
-IssueManager.prototype.getLastIssue = function(id){
-	var iss ='';
-	if(this.issues.has(id))
-		iss = this.issues.get(id)[this.issues.get(id).length -1];
+//Function to see if an issue exists in the database
+IssueManager.prototype.existID = function(userid, issueid){
 
+	return new Promise(function(resolve,reject){
 
-	return iss;
-};
+		MongoClient.connect(url, function(err, db) {
+		  if (err) throw err;
+		  var dbo = db.db(dbname);
+		  var query = { userid: userid, issueid: issueid};
+		  dbo.collection(colname).find(query).toArray(function(err, result) {
+			    if (err) reject(err);
+					db.close();
+					resolve(result.length > 0);
+			});
 
-IssueManager.prototype.deleteIssue = function(id, issue_id){
-
-	if(this.issues.has(id)){
-		if(this.issues.get(id).length == 1 && issue_id == 0){
-			this.issues.delete(id);
-			console.log("Deleted id");
-		}
-		else{
-			this.issues.set(id,this.issues.get(id).splice(issue_id,1));
-			console.log("Deleted issue");
-
-		}
-	}
-};
-
-IssueManager.prototype.existID = function(id){
-
-	return this.issues.has(id)
-
+		});
+	})
 }
 
+function getLastIssueID(userid){
+
+	return new Promise(function(resolve,reject){
+    MongoClient.connect(url, function(err, db) {
+      if (err) throw err;
+      var dbo = db.db(dbname);
+      var query = { userid: userid };
+      dbo.collection(colname).find(query).toArray(function(err, result) {
+        if (err) reject(err);
+				resolve(result[result.length-1].issueid);
+
+        db.close();
+      });
+    })
+  })
+}
 
 
 module.exports = IssueManager;

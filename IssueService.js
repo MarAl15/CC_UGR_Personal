@@ -74,29 +74,31 @@ app.get('/', function (req, res) {
 
 
 
-//See the issues of a id
-app.get('/issue/:id', function (req, res) {
+//See the issues of an user
+app.get('/issue/:userid', function (req, res) {
 
-	var issues = iss.getIssues(req.params.id);
-	var resjson = { "size" : issues.length };
-	if( issues.length > 0 ){
-		for( i = 0; i < issues.length; i++ )
-			resjson["Issue #" + i] = issues[i];
-    res.status(200);
-    res.send(resjson);
-  }
-	else {
-    res.status(404);
-    res.send({"msg": "Not found"});
-		logger.info("No issues for the id " + req.params.id);
-	}
+	iss.getIssues(req.params.userid).then(function(issues){
+
+    var resjson = { "size" : issues.length };
+    if( issues.length > 0 ){
+      for( i = 0; i < issues.length; i++ )
+        resjson["Issue #" + issues[i].issueid] = issues[i].issue;
+      res.status(200);
+      res.send(resjson);
+    }
+    else {
+      res.status(404);
+      res.send({"msg": "Not found"});
+      logger.info("No issues for the id " + req.params.id);
+    }
+
+  },function(err){console.log(err)})
 
 });
-
 //Add a new issue for the id
 app.post('/issue', function(req,res){
 
-    iss.addIssue(req.body.id, req.body.issue);
+    iss.addIssue(req.body.userid, req.body.issue);
     res.status(201); //Resource created
     res.send("added");
 
@@ -104,16 +106,17 @@ app.post('/issue', function(req,res){
 
 
 //Remove an issue for the given id
-app.delete('/issue', function(req,res){
+app.delete('/issue/:userid/:issueid', function(req,res){
 
-  var id = req.body.id;
-  var issue_id = req.body.issue;
+  var userid = req.params.userid;
+  var issueid = Number(req.params.issueid);
 
-  if(iss.existID(id)){
-    iss.deleteIssue(id,issue_id);
+  if(iss.existID(userid,issueid)){
+    iss.deleteIssue(userid,issueid);
     res.status(200);
     res.send("deleted");
   }
+
   else{
     res.status(404);
     res.send('Not found');
