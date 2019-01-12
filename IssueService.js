@@ -89,16 +89,16 @@ app.get('/issue/:userid', function (req, res) {
     else {
       res.status(404);
       res.send({"msg": "Not found"});
-      logger.info("No issues for the id " + req.params.id);
+      logger.info("No issues for the id " + req.params.userid);
     }
 
   },function(err){console.log(err)})
 
 });
 //Add a new issue for the id
-app.post('/issue', function(req,res){
+app.post('/issue/:userid/:issue', function(req,res){
 
-    iss.addIssue(req.body.userid, req.body.issue);
+    iss.addIssue(req.params.userid, req.params.issue);
     res.status(201); //Resource created
     res.send("added");
 
@@ -110,7 +110,6 @@ app.delete('/issue/:userid/:issueid', function(req,res){
 
   var userid = req.params.userid;
   var issueid = Number(req.params.issueid);
-
   if(iss.existID(userid,issueid)){
     iss.deleteIssue(userid,issueid);
     res.status(200);
@@ -118,6 +117,7 @@ app.delete('/issue/:userid/:issueid', function(req,res){
   }
 
   else{
+
     res.status(404);
     res.send('Not found');
     logger.error(id + " not exists");

@@ -29,6 +29,7 @@ function IssueManager(){
 }
 
 IssueManager.prototype.addIssue = function(userid, issue ){
+
 	getLastIssueID(userid).then(function(issueid){
 		issueid = issueid +1;
 
@@ -104,7 +105,9 @@ function getLastIssueID(userid){
       var query = { userid: userid };
       dbo.collection(colname).find(query).toArray(function(err, result) {
         if (err) reject(err);
-				resolve(result[result.length-1].issueid);
+				var lastid = 0
+				if(result.length != 0) lastid = result[result.length-1].issueid
+				resolve(lastid);
 
         db.close();
       });
