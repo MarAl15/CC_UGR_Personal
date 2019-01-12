@@ -15,13 +15,9 @@ sudo ufw enable
 echo "Abriendo puerto 27017..."
 sudo ufw allow 27017
 
-# Clonamos el repositorio
-echo "Clonando repositorio..."
-git clone https://github.com/adritake/CC_UGR_Personal.git
-
 # Copiamos el archivo customizado de configuración de mongo
 echo "Moviendo archivo de configuración de mongo..."
-sudo mv CC_UGR_Personal/orquestacion/mongodb.conf /etc/
+sudo mv ./mongodb.conf /etc
 
 # Reiniciamos mongo para que surja efecto la configuración nueva
 echo "Reiniciando mongodb..."

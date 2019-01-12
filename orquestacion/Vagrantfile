@@ -41,42 +41,104 @@ API_version = '2'
 # de configuración de vagrant que se va a usar dentro del método
 Vagrant.configure(API_version) do |config|
 
-  # Usamos el box que hemos descargado previamente con el comando $ vagrant box add azure https://github.com/azure/vagrant-azure/raw/v2.0/dummy.box --provider azure
-  config.vm.box = 'azure'
 
-  # Indicamos la localización de nuestra key para que se copie en la MV y podamos conectarnos
-  # por SSH
-  config.ssh.private_key_path = '~/.ssh/id_rsa'
+  # Definimos la primera máquina virtual que se llamará database en este Vagrantfile
+  config.vm.define "database" do |database|
+    # Usamos el box que hemos descargado previamente con el comando $ vagrant box add azure https://github.com/azure/vagrant-azure/raw/v2.0/dummy.box --provider azure
+    database.vm.box = 'azure'
 
-  # Configuramos el proveedor de la MV con las variables que hemos extraído al principio
-  config.vm.provider :azure do |azure, override|
+    # Indicamos la localización de nuestra key para que se copie en la MV y podamos conectarnos
+    # por SSH
+    database.ssh.private_key_path = '~/.ssh/id_rsa'
 
-    # Claves para la conexión con azure
-    azure.tenant_id = TENANT_ID
-    azure.client_id = CLIENT_ID
-    azure.client_secret = CLIENT_SECRET
-    azure.subscription_id = SUBSCRIPTION_ID
+    # Indicamos el nombre del host
+    servicio.vm.hostname = 'dbhostname'
 
-    # El grupo de recursos se llama hito5
-    azure.resource_group_name = "hito5"
-    # La MV creada se va a llamar MVIssue
-    azure.vm_name = "mvissue"
-    # El tamaño de la imágen es Standard_A0 (prestaciones básicas)
-    azure.vm_size = "Standard_A0"
-    # La imágen seleccionada es Ubuntu Sever 18.04 LTS
-    azure.vm_image_urn = "Canonical:UbuntuServer:18.04-LTS:latest"
-    # La localización del centro de datos es Francia central
-    azure.location = "francecentral"
-    # Necesitamos abrir el puerto 80 de la MV
-    azure.tcp_endpoints = 80
-
-    # El resto de parámetros se deja por defecto
+    # Indicamos la ip privada que va a tener la MV. Esto es importante porque tiene que ser
+    # la misma ip que se le indica al servicio. (https://blog.ipswitch.com/how-to-create-multi-machine-environments-with-vagrant)
+    database.vm.network "private_network", ip: "192.168.56.101"
 
 
-  end
+    # Configuramos el proveedor de la MV con las variables que hemos extraído al principio
+    database.vm.provider :azure do |azure, override|
 
+      # Claves para la conexión con azure
+      azure.tenant_id = TENANT_ID
+      azure.client_id = CLIENT_ID
+      azure.client_secret = CLIENT_SECRET
+      azure.subscription_id = SUBSCRIPTION_ID
+
+      # El grupo de recursos se llama hito5
+      azure.resource_group_name = "hito5"
+      # La MV creada se va a llamar MVIssue
+      azure.vm_name = "mvdb"
+      # El tamaño de la imágen es Standard_A0 (prestaciones básicas)
+      azure.vm_size = "Standard_A0"
+      # La imágen seleccionada es Ubuntu Sever 18.04 LTS
+      azure.vm_image_urn = "Canonical:UbuntuServer:18.04-LTS:latest"
+      # La localización del centro de datos es Francia central
+      azure.location = "francecentral"
+      # Necesitamos abrir el puerto 80 de la MV
+      azure.tcp_endpoints = 27017
+
+      # El resto de parámetros se deja por defecto
+
+
+    end
     # La provisión de la MV va a ser por un script llamado "script.sh" y que se encuentra en este mismo directorio
     # (https://www.vagrantup.com/docs/provisioning/shell.html)
-    config.vm.provision "shell", path: "script.sh"
+    database.vm.provision "shell", path: "scriptdb.sh"
+  end
+
+  # Definimos la segunda máquina virtual que se llamará servicio en este Vagrantfile
+  config.vm.define "servicio" do |servicio|
+    # Usamos el box que hemos descargado previamente con el comando $ vagrant box add azure https://github.com/azure/vagrant-azure/raw/v2.0/dummy.box --provider azure
+    servicio.vm.box = 'azure'
+
+    # Indicamos la localización de nuestra key para que se copie en la MV y podamos conectarnos
+    # por SSH
+    servicio.ssh.private_key_path = '~/.ssh/id_rsa'
+
+    # Indicamos el nombre del host
+    servicio.vm.hostname = 'servicehostname'
+
+    # Indicamos la ip privada que va a tener la MV. Para esta MV no es necesario pero lo pongo por si se necesita en un futuro
+    servicio.vm.network "private_network", ip: "192.168.56.102"
+
+
+
+    # Configuramos el proveedor de la MV con las variables que hemos extraído al principio
+    servicio.vm.provider :azure do |azure, override|
+
+      # Claves para la conexión con azure
+      azure.tenant_id = TENANT_ID
+      azure.client_id = CLIENT_ID
+      azure.client_secret = CLIENT_SECRET
+      azure.subscription_id = SUBSCRIPTION_ID
+
+      # El grupo de recursos se llama hito5
+      azure.resource_group_name = "hito5"
+      # La MV creada se va a llamar MVIssue
+      azure.vm_name = "mvissue"
+      # El tamaño de la imágen es Standard_A0 (prestaciones básicas)
+      azure.vm_size = "Standard_A0"
+      # La imágen seleccionada es Ubuntu Sever 18.04 LTS
+      azure.vm_image_urn = "Canonical:UbuntuServer:18.04-LTS:latest"
+      # La localización del centro de datos es Francia central
+      azure.location = "francecentral"
+      # Necesitamos abrir el puerto 80 de la MV
+      azure.tcp_endpoints = 80
+
+      # El resto de parámetros se deja por defecto
+
+
+    end
+    # La provisión de la MV va a ser por un script llamado "script.sh" y que se encuentra en este mismo directorio
+    # (https://www.vagrantup.com/docs/provisioning/shell.html)
+    servicio.vm.provision "shell", path: "scriptweb.sh"
+  end
+
+
+
 
 end
