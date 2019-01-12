@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script para la provisión de la máquina virtual
+# Script para la provisión de la máquina virtual del servicio
 
 echo "Instalando nodejs..."
 sudo apt-get install nodejs -y
