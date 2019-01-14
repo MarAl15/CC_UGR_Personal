@@ -26,7 +26,7 @@ function IssueManager( production ){
 	  if (err) throw err;
 	  var dbo = db.db(dbname);
 	  dbo.createCollection(colname,function(err, res) {
-	    if (err) throw console.log(err);
+	    if (err) console.log(err);
 	    db.close();
 	  });
 	});
