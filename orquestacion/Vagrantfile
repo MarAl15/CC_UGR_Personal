@@ -52,7 +52,7 @@ Vagrant.configure(API_version) do |config|
     database.ssh.private_key_path = '~/.ssh/id_rsa'
 
     # Indicamos el nombre del host
-    servicio.vm.hostname = 'dbhostname'
+    database.vm.hostname = 'dbhostname'
 
     # Indicamos la ip privada que va a tener la MV. Esto es importante porque tiene que ser
     # la misma ip que se le indica al servicio. (https://blog.ipswitch.com/how-to-create-multi-machine-environments-with-vagrant)

@@ -1,23 +1,27 @@
 #!/bin/bash
 # Script para la provisión de la máquina virtual de la base de datos
 
+# Instalamos git
+echo "Instalando git..."
+sudo apt-get install git -y
+
 echo "Actualizando paquetes..."
 sudo apt-get update -y
 
 echo "Instalando mongodb..."
 sudo apt install -y mongodb
 
+# Clonamos el repositorio
+echo "Clonando repositorio..."
+sudo git clone https://github.com/adritake/CC_UGR_Personal.git
+
 # Es necesario activar ufw para poder abrir puertos posteriormente
 echo "Activando cortafuegos..."
-sudo ufw enable
+sudo ufw --force enable
 
 # Mongodb escucha en el puerto 27017 por defecto
 echo "Abriendo puerto 27017..."
 sudo ufw allow 27017
-
-# Clonamos el repositorio
-echo "Clonando repositorio..."
-git clone https://github.com/adritake/CC_UGR_Personal.git
 
 # Copiamos el archivo customizado de configuración de mongo
 echo "Moviendo archivo de configuración de mongo..."
