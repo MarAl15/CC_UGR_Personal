@@ -38,7 +38,12 @@ var app = express();
 
 //Import the IssueManager
 const IssueManager = require('./IssueManager');
-var iss = new IssueManager();
+
+if(process.argv[2] == "production")
+  var iss = new IssueManager(true);
+else
+  var iss = new IssueManager(false);
+
 
 
 //Seting the ports to the app

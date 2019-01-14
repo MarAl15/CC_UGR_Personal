@@ -72,7 +72,7 @@ describe('Service test', function() {
 
 describe('IssueManager test', function() {
 
-	var iss = new IssueManager();
+	var iss = new IssueManager(false);
 	var userid = "usertest1";
 
 	it( 'get 0 issues when there is no issues' , function(done){

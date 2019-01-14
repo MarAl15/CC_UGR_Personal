@@ -10,7 +10,11 @@ var colname = "issues"
 
 
 //Class IssueManager
-function IssueManager(){
+function IssueManager( production ){
+
+	if(!production)
+		url = "mongodb://localhost:27017/";
+
 	//Connect to mongodb and create the database
 	MongoClient.connect(url + dbname, function(err, db) {
 	  if (err) throw err;

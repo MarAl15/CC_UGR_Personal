@@ -85,7 +85,7 @@ Vagrant.configure(API_version) do |config|
           # la misma ip que se le indica al servicio. (https://blog.ipswitch.com/how-to-create-multi-machine-environments-with-vagrant)
           database.vm.network "private_network", ip: "192.168.10.21"
 
-          La solución que he tomado es crear una red privada y que ambas MV la usen, he comprobado que por defecto azure crea
+          La solución que he tomado es crear una red privada con el atributo azure.virtual_network_name y que ambas MV la usen, he comprobado que por defecto azure crea
           la primera MV en esa red privada con la ip 10.0.0.4 y la segunda con la ip 10.0.0.5 y así sucesivamente
 =end
       azure.virtual_network_name="privatenetworkissue"
