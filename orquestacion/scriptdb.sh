@@ -34,7 +34,7 @@ sudo ufw allow 27017
 
 # Como hemos activado el cortafuegos es necesario permitir el puerto 80
 echo "Abriendo puerto 80..."
-sudo ufw allow 27017
+sudo ufw allow 80
 
 # Copiamos el archivo customizado de configuración de mongo
 echo "Moviendo archivo de configuración de mongo..."

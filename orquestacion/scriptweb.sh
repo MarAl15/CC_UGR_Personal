@@ -25,5 +25,8 @@ sudo npm install
 echo "Instalando pm2..."
 sudo npm install pm2 -g
 
+echo "Abriendo puerto 80..."
+sudo ufw allow 80
+
 echo "Comenzando servicio..."
 sudo pm2 start IssueService.js -- production

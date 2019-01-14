@@ -50,14 +50,7 @@ Vagrant.configure(API_version) do |config|
     # Indicamos la localización de nuestra key para que se copie en la MV y podamos conectarnos
     # por SSH
     database.ssh.private_key_path = '~/.ssh/id_rsa'
-=begin
-    # Indicamos el nombre del host
-    database.vm.hostname = 'dbhostname'
 
-    # Indicamos la ip privada que va a tener la MV. Esto es importante porque tiene que ser
-    # la misma ip que se le indica al servicio. (https://blog.ipswitch.com/how-to-create-multi-machine-environments-with-vagrant)
-    database.vm.network "private_network", ip: "10.0.0.4"
-=end
 
     # Configuramos el proveedor de la MV con las variables que hemos extraído al principio
     database.vm.provider :azure do |azure, override|
@@ -78,10 +71,24 @@ Vagrant.configure(API_version) do |config|
       azure.vm_image_urn = "Canonical:UbuntuServer:18.04-LTS:latest"
       # La localización del centro de datos es Francia central
       azure.location = "francecentral"
-      # Necesitamos abrir el puerto 80 de la MV
+      # Necesitamos abrir el puerto 27017 de la MV porque es el que usa mongodb
       azure.tcp_endpoints = 27017
 
-      azure.virtual_network_name="redprivada"
+=begin
+          Para la creación de la red privada había intentado lo siguiente pero no creaba la MV con la ip privada
+          que le proporcionaba
+
+          # Indicamos el nombre del host
+          database.vm.hostname = 'dbhostname'
+
+          # Indicamos la ip privada que va a tener la MV. Esto es importante porque tiene que ser
+          # la misma ip que se le indica al servicio. (https://blog.ipswitch.com/how-to-create-multi-machine-environments-with-vagrant)
+          database.vm.network "private_network", ip: "192.168.10.21"
+
+          La solución que he tomado es crear una red privada y que ambas MV la usen, he comprobado que por defecto azure crea
+          la primera MV en esa red privada con la ip 10.0.0.4 y la segunda con la ip 10.0.0.5 y así sucesivamente
+=end
+      azure.virtual_network_name="privatenetworkissue"
 
       # El resto de parámetros se deja por defecto
 
@@ -100,14 +107,6 @@ Vagrant.configure(API_version) do |config|
     # Indicamos la localización de nuestra key para que se copie en la MV y podamos conectarnos
     # por SSH
     servicio.ssh.private_key_path = '~/.ssh/id_rsa'
-=begin
-    # Indicamos el nombre del host
-    servicio.vm.hostname = 'servicehostname'
-
-    # Indicamos la ip privada que va a tener la MV. Para esta MV no es necesario pero lo pongo por si se necesita en un futuro
-    servicio.vm.network "private_network", ip: "10.0.0.5"
-=end
-
 
     # Configuramos el proveedor de la MV con las variables que hemos extraído al principio
     servicio.vm.provider :azure do |azure, override|
@@ -131,7 +130,7 @@ Vagrant.configure(API_version) do |config|
       # Necesitamos abrir el puerto 80 de la MV
       azure.tcp_endpoints = 80
 
-      azure.virtual_network_name="redprivada"
+      azure.virtual_network_name="privatenetworkissue"
 
       # El resto de parámetros se deja por defecto
 
