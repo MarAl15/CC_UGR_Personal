@@ -25,7 +25,7 @@ function IssueManager( production ){
 	MongoClient.connect(url, function(err, db) {
 	  if (err) throw err;
 	  var dbo = db.db(dbname);
-	  dbo.createCollection(colname, function(err, res) {
+	  dbo.createCollection(colname,{safe:false} ,function(err, res) {
 	    if (err) throw err;
 	    db.close();
 	  });
