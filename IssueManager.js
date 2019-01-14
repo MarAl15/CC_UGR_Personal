@@ -2,7 +2,7 @@
 var MongoClient = require('mongodb').MongoClient;
 
 //URL of the database
-var url = "mongodb://192.168.56.101:27017/";
+var url = "mongodb://10.0.0.4:27017/";
 //Name of de database
 var dbname = "IssueDB"
 //Name of the collection

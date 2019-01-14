@@ -56,7 +56,7 @@ Vagrant.configure(API_version) do |config|
 
     # Indicamos la ip privada que va a tener la MV. Esto es importante porque tiene que ser
     # la misma ip que se le indica al servicio. (https://blog.ipswitch.com/how-to-create-multi-machine-environments-with-vagrant)
-    database.vm.network "private_network", ip: "192.168.56.101"
+    database.vm.network "private_network", ip: "10.0.0.4"
 
 
     # Configuramos el proveedor de la MV con las variables que hemos extraído al principio
@@ -79,7 +79,7 @@ Vagrant.configure(API_version) do |config|
       # La localización del centro de datos es Francia central
       azure.location = "francecentral"
       # Necesitamos abrir el puerto 80 de la MV
-      azure.tcp_endpoints = 27017
+      azure.tcp_endpoints = [27017]
 
       # El resto de parámetros se deja por defecto
 
@@ -103,7 +103,7 @@ Vagrant.configure(API_version) do |config|
     servicio.vm.hostname = 'servicehostname'
 
     # Indicamos la ip privada que va a tener la MV. Para esta MV no es necesario pero lo pongo por si se necesita en un futuro
-    servicio.vm.network "private_network", ip: "192.168.56.102"
+    servicio.vm.network "private_network", ip: "10.0.0.5"
 
 
 
