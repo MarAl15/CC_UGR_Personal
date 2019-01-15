@@ -17,7 +17,7 @@ Se ha elegido el tamaño de imagen Standard_A0 debido a los siguientes motivos.
 - El servicio está en fase de desarrollo por lo que su uso va a ser muy reducido y, por lo tanto, no es necesario usar una imagen con más prestaciones.
 
 ### Script de provisionamiento
-Hasta ahora se había usado Ansible para provisionar máquinas virtuales, el cual ha demostrado su efectividad y sencillez. Por lo tanto, para aprender nuevas maneras de aprovisionar máquinas virtuales y por diferenciarme un poco del resto de proyectos se ha creado un [script](../orquestacion/script.sh) de bash para provisionar la MV.
+Hasta ahora se había usado Ansible para provisionar máquinas virtuales, el cual ha demostrado su efectividad y sencillez. Por lo tanto, para aprender nuevas maneras de aprovisionar máquinas virtuales y por diferenciarme un poco del resto de proyectos se ha creado un [script](../orquestacion/scriptweb.sh) de bash para provisionar la MV del servicio y [otro](../orquestacion/scriptdb.sh) para la base de datos.
 
 He encontrado la ventaja de que se usan las órdenes tal y como se usan en el ordenador de trabajo, por lo tanto es fácil de escribir y probar. El inconveniente es que es sólo válido para Ubuntu. Para otros sistemas operativos será necesario usar el [playbook](../provision/MyPlaybook.yml) que creé para el hito anterior.
 
@@ -46,5 +46,32 @@ Se han usado el mismo criterio que en el hito anterior explicado en este [docume
 - Una vez hemos obtenido y almacenado todos los datos necesarios seguimos con la documentación de Azure. Añadimos la box de azure a vagrant con este comando `vagrant box add azure https://github.com/azure/vagrant-azure/raw/v2.0/dummy.box --provider azure` el cual la añade y le da el nombre de "azure".
 - Instalamos el plugin de Azure para vagrant con `vagrant plugin install vagrant-azure`
 - Creamos el archivo *Vagrantfile* el cual se encuentra programado en ruby y documentado [aquí](../orquestacion/Vagrantfile).
-- Creamos el [script de aprovisionamiento](../orquestacion/script.sh). Para aprovisionar con script me he basado en la [documentación de vagrant](https://www.vagrantup.com/docs/provisioning/shell.html).
-- Para comenzar la orquestación ejecutamos `vagrant up --provider=azure`. (Es posible que los comandos de vagrant sean necesario ejecutarlos con sudo).
+- Creamos el [script de aprovisionamiento](../orquestacion/scriptweb.sh) para el servicio y otro [script](../orquestacion/scriptdb.sh) para la base de datos. Para aprovisionar con script me he basado en la [documentación de vagrant](https://www.vagrantup.com/docs/provisioning/shell.html).
+- Para comenzar la orquestación ejecutamos `vagrant up --provider=azure --no-parallel`. (Es posible que los comandos de vagrant sean necesario ejecutarlos con sudo). Se le de la opción de --no-parallel que significa que cree las MV secuencialmente. Si no le daba esa opción me salía error.
+
+## Resultados
+A continuación se muestra parte de la salida de ejecutar el Vagrantfile, se han omitido las salidas de instalación del paquetes de los scripts.
+
+![orquestacion 1](img/orquestacion1.png)
+![orquestacion 2](img/orquestacion2.png)
+![orquestacion 3](img/orquestacion3.png)
+![orquestacion 4](img/orquestacion4.png)
+![orquestacion 5](img/orquestacion5.png)
+
+Resultado de la salida de la ruta raíz del servicio.
+
+![orquestacion test](img/orquestaciontest.png)
+
+
+ ## Instrucciones para la corrección
+
+ - Cumplir los prerrequisitos.
+ - Clonar este repositorio `git clone https://github.com/adritake/CC_UGR_Personal.git`
+ - Ir al directorio *CC_UGR_Personal/orquestacion*
+ - Hacer `az login`
+ - Ejecutar el comando `az ad sp create-for-rbac > azdata.json` para guardar los datos de tu cuenta.
+ - Ejecutar el comando `az account list --query "[?isDefault].id" -o tsv > idsubscripcion.txt` para guardar los datos de tu subscripción.
+ - Si tu instalación de vagrant es un ejecutable, moverlo al directorio.
+ - Ejecutar `sudo ./vagrant up --provider=azure --no-parallel` para lanzar el Vagrantfile.
+ - Nota: Si se queda pillado abriendo puertos en el aprovisionamiento de la primera MV, cancelar el proceso, borrar los recursos creados y volver a lanzar el vagrantfile. Si en la segunda MV da error al lanzar el servicio con pm2, conectarte con ssh a la MV y lanzarlo manualmente.
+ - Acceder a la IP de la MV *mvissue* y comprobar que devuelve un JSON con status: OK
