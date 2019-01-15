@@ -50,7 +50,7 @@ Se han usado el mismo criterio que en el hito anterior explicado en este [docume
 - Para comenzar la orquestación ejecutamos `vagrant up --provider=azure --no-parallel`. (Es posible que los comandos de vagrant sean necesario ejecutarlos con sudo). Se le de la opción de --no-parallel que significa que cree las MV secuencialmente. Si no le daba esa opción me salía error.
 
 ## Resultados
-A continuación se muestra parte de la salida de ejecutar el Vagrantfile, se han omitido las salidas de instalación del paquetes de los scripts.
+A continuación se muestra parte de la salida de ejecutar el Vagrantfile, se han omitido las salidas de instalación de paquetes de los scripts.
 
 ![orquestacion 1](img/orquestacion1.png)
 ![orquestacion 2](img/orquestacion2.png)
