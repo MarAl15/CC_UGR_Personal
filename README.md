@@ -77,7 +77,7 @@ MV2: 40.89.152.162
 
 ## Orquestación
 
-En esta fase del proyecto se cuentan con dos máquinas virtuales, una para el servicio y otra para la base de datos. Su orquestación se ha realizado mediante [Vagrant](https://www.vagrantup.com/). Se han desplegado en Azure en dos máquinas virtuales con UbuntuServer 18.04 y se han aprovisionado con dos scripts de bash que se encuentran en el directorio de [orquestacion](./orquestacion). Más información sobre el proceso de orquestación en el siguiente [documento](./doc/Orquestacion.md).
+En esta fase del proyecto se cuentan con dos máquinas virtuales, una para el servicio y otra para la base de datos. Su orquestación se ha realizado mediante [Vagrant](https://www.vagrantup.com/). Se han desplegado en Azure en dos máquinas virtuales con UbuntuServer 18.04 y se han aprovisionado con dos scripts de bash que se encuentran en el directorio de [orquestacion](./orquestacion). Más información sobre el proceso de orquestación en el siguiente [documento](./docs/Orquestacion.md).
 
 Despliegue Vagrant:
 
