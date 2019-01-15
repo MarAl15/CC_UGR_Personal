@@ -17,8 +17,6 @@ Usualmente la gestión de tareas a realizar en un proyecto se suele llevar a cab
 - Notificaciones de deadlines en la conversación.
 
 
-
-
 ## Descripción del proyecto
 
 Tras un estudio de las [arquitecturas](http://jj.github.io/CC/documentos/temas/Arquitecturas_para_la_nube) posibles para el desarrollo del proyecto, se ha optado por una arquitectura basada en microservicios ya que se adapta perfectamente a lo que se pretende hacer y es necesario que esté alojada en la nube y a la filosofía de la asignatura Cloud Computing.
@@ -28,16 +26,15 @@ El proyecto contará con dos microservicios:
 - Un "servicio almacenador" que será la base de datos en MongoDB.
 - Un "servicio gestor" que será el encargado de enviar y recibir datos a los usuarios y procesar los comandos que estos le envían. En general los comandos a realizar por este servicio serán almacenar issues o milestones en la base de datos o enviar los ya almacenados a los usuarios.
 
-Actualmente el proyecto solo cuenta con el servicio gestor. Este servicio está desarrollado en nodejs para ser desplegado en una máquina virtual en algún servidor. Para este desarrollo existe un framework para nodejs con el que se puede programar toda la funcionalidad de las peticiones REST. El framework usado es [Express](https://expressjs.com/es/).
+Actualmente el proyecto cuenta con el servicio gestor. Este servicio está desarrollado en nodejs para ser desplegado en una máquina virtual en algún servidor. Para este desarrollo existe un framework para nodejs con el que se puede programar toda la funcionalidad de las peticiones REST. El framework usado es [Express](https://expressjs.com/es/).
 
 Para testear el servicio se usa la librería [supertest](https://github.com/visionmedia/supertest) y se usa la herramienta de integración continua [TravisCI](https://travis-ci.com/).
 
 Actualmente el proyecto cuenta con un programa en nodejs llamado [IssueService](./IssueService.js) que es el encargado de antender todas las peticiones REST y escribir en los logs. Por otro lado hay una clase llamada [IssueManager](./IssueManager.js) que es la que realiza toda la funcionalidad de almacenar los datos en un Map. En versiones futuras esta clase se encargará de enviar los datos al servicio almacenador.
 
-En cuanto al almacenamiento de datos se usará una base de datos [MongoDB](https://www.mongodb.com/es) la cual será desplegada en la nube. En ella se almacenarán las distintas tablas necesarias para la gestión de issues y milestones.
+En cuanto al almacenamiento de datos se usa una base de datos [MongoDB](https://www.mongodb.com/es) la cual es desplegada en una máquina virtual. En ella se almacenan las distintas colecciones necesarias para la gestión de issues.
 
-La comunicación entre servicios será realizada por brokers, en especial [RabbitMQ](https://www.rabbitmq.com/).
-
+Ambos servicios se encuentran en la misma red privada y realizan su comunicación gracias a las IP's y puertos asignados.
 
 ## Descripción de los milestones del proyecto
 
@@ -77,6 +74,12 @@ MV: 168.61.179.44
 Se ha creado un [script](./acopio.sh) de bash donde se crear una MV en Azure con imagen Ubuntu Server 18.04 LTS. Además, se prepara la imagen para poder acceder a ella vía http y se aprovisiona con un [playbook](./provision/MyPlaybook.yml) de Ansible. Documentación detallada sobre la automatización se encuentra en el siguiente [documento](./docs/Automatizacion.md)
 
 MV2: 40.89.152.162
+
+## Orquestación
+
+En esta fase del proyecto se cuentan con dos máquinas virtuales, una para el servicio y otra para la base de datos. Su orquestación se ha realizado mediante [Vagrant](https://www.vagrantup.com/). Se han desplegado en Azure en dos máquinas virtuales con UbuntuServer 18.04 y se han aprovisionado con dos scripts de bash que se encuentran en el directorio de [orquestacion](./orquestacion)
+
+Despliegue Vagrant:
 
 
 [Página web del proyecto](https://adritake.github.io/CC_UGR_Personal/).
