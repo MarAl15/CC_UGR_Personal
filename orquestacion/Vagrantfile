@@ -141,7 +141,4 @@ Vagrant.configure(API_version) do |config|
     servicio.vm.provision "shell", path: "scriptweb.sh"
   end
 
-
-
-
 end
