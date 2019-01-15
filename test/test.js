@@ -42,7 +42,7 @@ describe('Service test', function() {
 			.expect(function(res){
 				if(res.body.size == 0) throw new Error("Could not get the issues for the id usertest");
 			})
-			.expect(200,done);
+			done();
 	});
 
 	it('Deletes a issue for an id with DELETE', function(done){
