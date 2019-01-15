@@ -66,6 +66,8 @@ Resultado de la salida de la ruta raíz del servicio.
  ## Instrucciones para la corrección
 
  - Cumplir los prerrequisitos.
+ - Añadir la box de azure: `vagrant box add azure https://github.com/azure/vagrant-azure/raw/v2.0/dummy.box --provider azure`.
+ - Instalar el plugin de azure para vagrant: `vagrant plugin install vagrant-azure`
  - Clonar este repositorio `git clone https://github.com/adritake/CC_UGR_Personal.git`
  - Ir al directorio *CC_UGR_Personal/orquestacion*
  - Hacer `az login`
