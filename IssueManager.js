@@ -32,6 +32,7 @@ function IssueManager( production ){
 	});
 }
 
+//Add issue to the database
 IssueManager.prototype.addIssue = function(userid, issue ){
 
 	getLastIssueID(userid).then(function(issueid){
@@ -51,6 +52,7 @@ IssueManager.prototype.addIssue = function(userid, issue ){
 
 };
 
+// Gets the issues of an user
 IssueManager.prototype.getIssues = function(userid){
 
 	return new Promise(function(resolve,reject){
@@ -67,7 +69,7 @@ IssueManager.prototype.getIssues = function(userid){
 
 };
 
-
+// Delete a issue
 IssueManager.prototype.deleteIssue = function(userid, issueid){
 
 	MongoClient.connect(url, function(err, db) {
@@ -100,6 +102,7 @@ IssueManager.prototype.existID = function(userid, issueid){
 	})
 }
 
+// Private function to see the las issue id of an user, just to calculate the next index
 function getLastIssueID(userid){
 
 	return new Promise(function(resolve,reject){
