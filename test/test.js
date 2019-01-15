@@ -42,6 +42,7 @@ describe('Service test', function() {
 			.expect(function(res){
 				if(res.body.size == 0) throw new Error("Could not get the issues for the id usertest");
 			})
+			
 			done();
 	});
 
