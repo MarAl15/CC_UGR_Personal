@@ -30,7 +30,7 @@ f.each_line do |line|
   SUBSCRIPTION_ID += line
 end
 
-#Eliminamos el salto de linia de la variable con el método chomp (https://ruby-doc.org/core-2.2.0/String.html)
+#Eliminamos el salto de linea de la variable con el método chomp (https://ruby-doc.org/core-2.2.0/String.html)
 SUBSCRIPTION_ID = SUBSCRIPTION_ID.chomp
 
 
@@ -86,7 +86,7 @@ Vagrant.configure(API_version) do |config|
           database.vm.network "private_network", ip: "192.168.10.21"
 
           La solución que he tomado es crear una red privada con el atributo azure.virtual_network_name y que ambas MV la usen, he comprobado que por defecto azure crea
-          la primera MV en esa red privada con la ip 10.0.0.4 y la segunda con la ip 10.0.0.5 y así sucesivamente
+          la primera MV en esa red privada se crea con la ip 10.0.0.4 y la segunda con la ip 10.0.0.5 y así sucesivamente
 =end
       azure.virtual_network_name="privatenetworkissue"
 
@@ -94,7 +94,7 @@ Vagrant.configure(API_version) do |config|
 
 
     end
-    # La provisión de la MV va a ser por un script llamado "script.sh" y que se encuentra en este mismo directorio
+    # La provisión de la MV va a ser por un script llamado "scriptdb.sh" y que se encuentra en este mismo directorio
     # (https://www.vagrantup.com/docs/provisioning/shell.html)
     database.vm.provision "shell", path: "scriptdb.sh"
   end
@@ -130,13 +130,14 @@ Vagrant.configure(API_version) do |config|
       # Necesitamos abrir el puerto 80 de la MV
       azure.tcp_endpoints = 80
 
+      # Usamos la misma red privada que en la primera MV
       azure.virtual_network_name="privatenetworkissue"
 
       # El resto de parámetros se deja por defecto
 
 
     end
-    # La provisión de la MV va a ser por un script llamado "script.sh" y que se encuentra en este mismo directorio
+    # La provisión de la MV va a ser por un script llamado "scriptwev.sh" y que se encuentra en este mismo directorio
     # (https://www.vagrantup.com/docs/provisioning/shell.html)
     servicio.vm.provision "shell", path: "scriptweb.sh"
   end
