@@ -79,6 +79,10 @@ MV2: 40.89.152.162
 
 En esta fase del proyecto se cuentan con dos máquinas virtuales, una para el servicio y otra para la base de datos. Su orquestación se ha realizado mediante [Vagrant](https://www.vagrantup.com/). Se han desplegado en Azure en dos máquinas virtuales con UbuntuServer 18.04 y se han aprovisionado con dos scripts de bash que se encuentran en el directorio de [orquestacion](./orquestacion). Más información sobre el proceso de orquestación en el siguiente [documento](./docs/Orquestacion.md).
 
+He comprobado la orquestación de Sergio Samaniego Martínez([@samahetfield](https://github.com/samahetfield)). La comprobación se encuentra al final de este [documento](./docs/Orquestacion.md)
+
+La orquestación de este proyecto ha sido comprobada por Sergio Samaniego Martínez([@samahetfield](https://github.com/samahetfield)) en el siguiente [documento](https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/hito5.md)
+
 Despliegue Vagrant:
 
 
