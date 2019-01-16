@@ -77,3 +77,29 @@ Resultado de la salida de la ruta raíz del servicio.
  - Ejecutar `sudo ./vagrant up --provider=azure --no-parallel` para lanzar el Vagrantfile.
  - Nota: Si se queda pillado abriendo puertos en el aprovisionamiento de la primera MV, cancelar el proceso, borrar los recursos creados y volver a lanzar el vagrantfile. Si en la segunda MV da error al lanzar el servicio con pm2, conectarte con ssh a la MV y lanzarlo manualmente.
  - Acceder a la IP de la MV *mvissue* y comprobar que devuelve un JSON con status: OK
+
+
+## Corrección de un compañero
+
+Se va proceder a corregir la orquestación de Sergio Samaniego Martínez([@samahetfield](https://github.com/samahetfield)). Para ello me clono su [repositorio](https://github.com/samahetfield/PersonalCC-1819.git) y sigo las instrucciones que aparecen en este [documento](https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/hito5.md)
+
+- Me sitúo en el directorio *PersonalCC-1819/orquestacion*
+- Ejecuto `az ad sp create-for-rbac` para ver los datos de mi cuenta de azure.
+- Exporto las variables como se indica en el documento.
+- Ejecuto `az account list --query "[?isDefault].id" -o tsv` para ver el ID de mi subscripción.
+- Exporto también el ID como indica en el documento.
+- No es necesario que me instale ninguna box ni plugin de azure porque ya los tenía instalados para mi proyecto.
+- Les cambio el nombre a la MV del vagrantfile para evitar posibles errores de DNS.
+- Ejecuto `sudo vagrant up --provider=azure --no-parallel`
+
+A continuación se muestra la salida del comando anterior (se han omitido algunas partes de las salidas de los playbooks de ansible)
+
+![orquestacion correccion 1](./img/orquestacioncorreccion1.png)
+![orquestacion correccion 2](./img/orquestacioncorreccion2.png)
+![orquestacion correccion 3](./img/orquestacioncorreccion3.png)
+![orquestacion correccion 4](./img/orquestacioncorreccion4.png)
+![orquestacion correccion 5](./img/orquestacioncorreccion5.png)
+
+
+Si accedemos a la ip de la MV servicio obtenemos el siguiente JSON que indica que se han desplegado correctamente.
+![orquestacion correccion 6](./img/orquestacioncorreccion6.png)
