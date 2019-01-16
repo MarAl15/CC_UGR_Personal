@@ -83,7 +83,7 @@ He comprobado la orquestación de Sergio Samaniego Martínez([@samahetfield](htt
 
 La orquestación de este proyecto ha sido comprobada por Sergio Samaniego Martínez([@samahetfield](https://github.com/samahetfield)) en el siguiente [documento](https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/hito5.md)
 
-Despliegue Vagrant:
+Despliegue Vagrant: 40.89.158.46
 
 
 [Página web del proyecto](https://adritake.github.io/CC_UGR_Personal/).
